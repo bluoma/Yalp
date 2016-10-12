@@ -32,5 +32,22 @@ public let defaultAppearanceKey = "defaultAppearanceKey"
 
 //MARK: - YelpApi
 
+public let yelpClientId = "nqpS3O6BlMmugVQrcuPuYA"
+public let yelpClientSecret = "c8bfR7nWfDUfLL54sPgrORHy5nML3eEvbQdtB8tbtPCfVXPZEwJS0j8jbt1idL7B"
+
+public let yelpOauth2Endpoint = "https://api.yelp.com/oauth2/token"
+public let yelpOauth2PostBody = "grant_type=client_credentials&client_id=\(yelpClientId)&client_secret=\(yelpClientSecret)"
+
+
+public let yelpAuthTokenName = "access_token"
+public var yelpCurrentAuthToken = "nIaCv6DaV7htXIy-U8vejevvvizKDYpL3O3nU82uMY70fOGLaaTDg1oyEtZvyZIRG4ghA31ioS3sEjEXz3NDTeA4uHaEOEJRrltyZVtJ9T9uLafvrrkgK22s0kz-V3Yx"
+
+public var yelpCurrentAuthTokenExpires = "15551999"  //from 10-12-2016 8am
+
+public let yelpBusinessSearchEndpoint = "https://api.yelp.com/v3/businesses/search"
+public var yelpOathBearerHeaderVKey = "Authorization"
+public var yelpOathBearerHeaderVal = "Bearer \(yelpCurrentAuthToken)"
+
+
 
  

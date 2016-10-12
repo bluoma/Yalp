@@ -24,7 +24,86 @@ class JsonDownloader {
         let urlconfig = URLSessionConfiguration.default
         urlconfig.timeoutIntervalForRequest = 12
         urlconfig.timeoutIntervalForResource = 12
+        
+        //urlconfig.httpAdditionalHeaders = [yelpOathBearerHeaderVKey:yelpOathBearerHeaderVal]
+        
         self.session = URLSession(configuration: urlconfig, delegate: nil, delegateQueue: nil)
+    }
+    
+    func doAuthToken() ->  URLSessionDataTask? {
+        
+        var dataTask: URLSessionDataTask? = nil
+        
+        if let authUrl = URL(string: yelpOauth2Endpoint) {
+        
+            var request = URLRequest(url: authUrl, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30)
+            request.httpMethod = "POST"
+            request.httpBody = yelpOauth2PostBody.data(using: .utf8, allowLossyConversion: false)
+            
+            dataTask = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+                var returnedError: NSError? = nil
+                var json: [String:AnyObject]? = nil
+                var statusCode: Int = 0;
+                var contentType: String = ""
+                var httpResp: HTTPURLResponse! = HTTPURLResponse(url: authUrl, statusCode: statusCode, httpVersion: "1.1", headerFields: nil)
+                
+                
+                if (response != nil) {
+                    httpResp = response as! HTTPURLResponse
+                    
+                    if (httpResp.allHeaderFields["Content-Type"] != nil) {
+                        contentType = httpResp.allHeaderFields["Content-Type"] as! String
+                    }
+                    statusCode = httpResp.statusCode
+                    dlog("responseUrl: \(httpResp.url)")
+                    dlog("responseCode: \(statusCode)")
+                    
+                    for (hkey, hval) in httpResp.allHeaderFields {
+                        
+                        let skey: String = hkey as! String
+                        let sval: String = hval as! String
+                        
+                        dlog("header: \(skey)::\(sval)")
+                    }
+                }
+                
+                if error != nil {
+                    dlog("error: \(error)")
+                    returnedError = error as? NSError
+                }
+                else if data != nil {
+                    if (contentType.contains("json")) {
+                        do {
+                            // Convert NSData to Dictionary where keys are of type String, and values are of any type
+                            json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
+                            dlog("json: \(json)")
+                        }
+                        catch let jerr as NSError {
+                            dlog("json Error: \(jerr)")
+                            returnedError = jerr
+                        }
+                    }
+                    else {
+                        let errString = "contentType is not json: \(contentType)"
+                        dlog(errString)
+                        let err: NSError = NSError(domain: "mooveeze", code: -400, userInfo: nil)
+                        returnedError = err
+                    }
+                }
+                else {
+                    dlog("both data and error are nil")
+                    returnedError = nil
+                }
+                
+                DispatchQueue.main.async {
+                    self.delegate?.jsonDownloaderDidFinish(downloader: self, json: json, response: httpResp, error: returnedError)
+                }
+ 
+            })
+        }
+        dataTask?.resume()
+        
+        return dataTask
     }
     
     func doDownload(urlString: String) -> URLSessionDataTask?

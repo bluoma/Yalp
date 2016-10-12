@@ -17,3 +17,649 @@ client_secret=c8bfR7nWfDUfLL54sPgrORHy5nML3eEvbQdtB8tbtPCfVXPZEwJS0j8jbt1idL7B
   "expires_in": 15551999,
   "token_type": "Bearer"
 }
+
+
+
+
+sample request1
+https://api.yelp.com/v3/businesses/search?term=thai&location=Oakland
+(Authorization: Bearer "asldfkjalsdkfjasldkf")
+
+sample response1
+{
+  "businesses": [
+    {
+      "id": "chai-thai-noodles-oakland-2",
+      "url": "https://www.yelp.com/biz/chai-thai-noodles-oakland-2?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        },
+        {
+          "title": "Laotian",
+          "alias": "laotian"
+        },
+        {
+          "title": "Noodles",
+          "alias": "noodles"
+        }
+      ],
+      "name": "Chai Thai Noodles",
+      "coordinates": {
+        "latitude": 37.794959,
+        "longitude": -122.253372
+      },
+      "price": "$$",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/xaL1DyV9x-0xs0veQ6PxKQ/o.jpg",
+      "review_count": 679,
+      "phone": "+15108322500",
+      "location": {
+        "address1": "545 International Blvd",
+        "zip_code": "94606",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": "Ste B"
+      }
+    },
+    {
+      "id": "vientian-café-oakland-2",
+      "url": "https://www.yelp.com/biz/vientian-caf%C3%A9-oakland-2?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        },
+        {
+          "title": "Laotian",
+          "alias": "laotian"
+        }
+      ],
+      "name": "Vientian Café",
+      "coordinates": {
+        "latitude": 37.7860450744629,
+        "longitude": -122.205863952637
+      },
+      "price": "$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/BDn-t1i1K_g0oPWG1kuYxA/o.jpg",
+      "review_count": 658,
+      "phone": "+15105352218",
+      "location": {
+        "address1": "3801 Allendale Ave",
+        "zip_code": "94619",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": null
+      }
+    },
+    {
+      "id": "siam-bay-authentic-thai-cuisine-oakland",
+      "url": "https://www.yelp.com/biz/siam-bay-authentic-thai-cuisine-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Siam Bay Authentic Thai Cuisine",
+      "coordinates": {
+        "latitude": 37.8029327804409,
+        "longitude": -122.275282730613
+      },
+      "price": "$$",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/oly03R54sjXdqAqxVBB-Fg/o.jpg",
+      "review_count": 359,
+      "phone": "+15104521499",
+      "location": {
+        "address1": "1009 Clay St",
+        "zip_code": "94607",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "neecha-thai-oakland",
+      "url": "https://www.yelp.com/biz/neecha-thai-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 3.5,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Neecha Thai",
+      "coordinates": {
+        "latitude": 37.81198,
+        "longitude": -122.24724
+      },
+      "price": "$$",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/Umnt6sgkLn7BCaB-x9favA/o.jpg",
+      "review_count": 509,
+      "phone": "+15104519419",
+      "location": {
+        "address1": "3236 Grand Ave",
+        "zip_code": "94610",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "infinite-thai-eatery-oakland",
+      "url": "https://www.yelp.com/biz/infinite-thai-eatery-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Infinite Thai Eatery",
+      "coordinates": {
+        "latitude": 37.829235,
+        "longitude": -122.248985
+      },
+      "price": "$$",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/BVguzkQTUwRcP-O-aGiocg/o.jpg",
+      "review_count": 122,
+      "phone": "+15108174816",
+      "location": {
+        "address1": "4301 Piedmont Ave",
+        "zip_code": "94611",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": "Ste A"
+      }
+    },
+    {
+      "id": "grand-avenue-thai-cuisine-oakland",
+      "url": "https://www.yelp.com/biz/grand-avenue-thai-cuisine-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Grand Avenue Thai Cuisine",
+      "coordinates": {
+        "latitude": 37.8089539,
+        "longitude": -122.2544402
+      },
+      "price": "$$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/H1inTQcHmQsku9mwqoqrqw/o.jpg",
+      "review_count": 249,
+      "phone": "+15104441507",
+      "location": {
+        "address1": "384 Grand Ave",
+        "zip_code": "94610",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": null
+      }
+    },
+    {
+      "id": "old-weang-ping-oakland",
+      "url": "https://www.yelp.com/biz/old-weang-ping-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Old Weang Ping",
+      "coordinates": {
+        "latitude": 37.7746847,
+        "longitude": -122.1811156
+      },
+      "price": "$",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/FUgxSxMgthIbB3aPqghKRg/o.jpg",
+      "review_count": 276,
+      "phone": "+15104308771",
+      "location": {
+        "address1": "6217 MacArthur Blvd",
+        "zip_code": "94605",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "sukho-thai-oakland",
+      "url": "https://www.yelp.com/biz/sukho-thai-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Sukho Thai",
+      "coordinates": {
+        "latitude": 37.8423594,
+        "longitude": -122.2515482
+      },
+      "price": "$$",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/aohpmBtIWgiwdomqTQIX9A/o.jpg",
+      "review_count": 118,
+      "phone": "+15104208600",
+      "location": {
+        "address1": "5498 College Ave",
+        "zip_code": "94618",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "saysetha-thai-cuisine-oakland",
+      "url": "https://www.yelp.com/biz/saysetha-thai-cuisine-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Saysetha Thai Cuisine",
+      "coordinates": {
+        "latitude": 37.848518371582,
+        "longitude": -122.260375976562
+      },
+      "price": "$$",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/BR08aBQjx6cY9RvTzcxRYQ/o.jpg",
+      "review_count": 283,
+      "phone": "+15106532837",
+      "location": {
+        "address1": "6230 Telegraph Ave",
+        "zip_code": "94620",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "soi-4-bangkok-eatery-oakland",
+      "url": "https://www.yelp.com/biz/soi-4-bangkok-eatery-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Soi 4 Bangkok Eatery",
+      "coordinates": {
+        "latitude": 37.8406075,
+        "longitude": -122.2514949
+      },
+      "price": "$$",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/ZE48jwpUpSQGnQ8GGxbdag/o.jpg",
+      "review_count": 592,
+      "phone": "+15106550889",
+      "location": {
+        "address1": "5421 College Ave",
+        "zip_code": "94618",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "camber-uptown-oakland",
+      "url": "https://www.yelp.com/biz/camber-uptown-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Bars",
+          "alias": "bars"
+        },
+        {
+          "title": "Thai",
+          "alias": "thai"
+        },
+        {
+          "title": "Laotian",
+          "alias": "laotian"
+        }
+      ],
+      "name": "Camber Uptown",
+      "coordinates": {
+        "latitude": 37.8070051756102,
+        "longitude": -122.270287403705
+      },
+      "price": "$$",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/lu3iMfe0J4hLgWaBNALHhg/o.jpg",
+      "review_count": 337,
+      "phone": "+15106634560",
+      "location": {
+        "address1": "1707 Telegraph Ave",
+        "zip_code": "94612",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "sticky-rice-cafe-oakland",
+      "url": "https://www.yelp.com/biz/sticky-rice-cafe-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Laotian",
+          "alias": "laotian"
+        },
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Sticky Rice Cafe",
+      "coordinates": {
+        "latitude": 37.7798690795898,
+        "longitude": -122.229499816895
+      },
+      "price": "$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/0SzzjNPeWHtVMxOV9ijnGQ/o.jpg",
+      "review_count": 180,
+      "phone": "+15105364605",
+      "location": {
+        "address1": "2810 International Blvd",
+        "zip_code": "94601",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "ninna-restaurant-oakland",
+      "url": "https://www.yelp.com/biz/ninna-restaurant-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        },
+        {
+          "title": "Asian Fusion",
+          "alias": "asianfusion"
+        }
+      ],
+      "name": "Ninna Restaurant",
+      "coordinates": {
+        "latitude": 37.8260548,
+        "longitude": -122.2526194
+      },
+      "price": "$$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/Dbmg-VNavUXzTgHNIzt8uw/o.jpg",
+      "review_count": 172,
+      "phone": "+15106016441",
+      "location": {
+        "address1": "4066 Piedmont Ave",
+        "zip_code": "94611",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "camber-montclair-oakland",
+      "url": "https://www.yelp.com/biz/camber-montclair-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Cocktail Bars",
+          "alias": "cocktailbars"
+        },
+        {
+          "title": "Laotian",
+          "alias": "laotian"
+        },
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Camber Montclair",
+      "coordinates": {
+        "latitude": 37.8260337,
+        "longitude": -122.2102229
+      },
+      "price": "$$",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/DC-UFBFIQZB8c-ZHADNnnA/o.jpg",
+      "review_count": 167,
+      "phone": "+15103380857",
+      "location": {
+        "address1": "6516 Moraga Ave",
+        "zip_code": "94611",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": null
+      }
+    },
+    {
+      "id": "tie-food-oakland-7",
+      "url": "https://www.yelp.com/biz/tie-food-oakland-7?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Food Delivery Services",
+          "alias": "fooddeliveryservices"
+        },
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Tie Food",
+      "coordinates": {
+        "latitude": 37.8100301363981,
+        "longitude": -122.24818615791
+      },
+      "price": "$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/u1YGdgwVBvLkPCqnv7ZQ5Q/o.jpg",
+      "review_count": 240,
+      "phone": "+15109077977",
+      "location": {
+        "address1": null,
+        "zip_code": "94605",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": null
+      }
+    },
+    {
+      "id": "souk-savanh-restaurant-oakland",
+      "url": "https://www.yelp.com/biz/souk-savanh-restaurant-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        },
+        {
+          "title": "Laotian",
+          "alias": "laotian"
+        },
+        {
+          "title": "Asian Fusion",
+          "alias": "asianfusion"
+        }
+      ],
+      "name": "Souk Savanh Restaurant",
+      "coordinates": {
+        "latitude": 37.7860293,
+        "longitude": -122.2405983
+      },
+      "price": "$",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/TZ9rvW3sdaoaLj_HGiJeOw/o.jpg",
+      "review_count": 138,
+      "phone": "+15105336021",
+      "location": {
+        "address1": "1927 International Blvd",
+        "zip_code": "94606",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "pagarung-thai-cuisine-oakland",
+      "url": "https://www.yelp.com/biz/pagarung-thai-cuisine-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 3.5,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Pagarung Thai Cuisine",
+      "coordinates": {
+        "latitude": 37.8259211035666,
+        "longitude": -122.208395004272
+      },
+      "price": "$$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/CCq9edeZwD7DwftoJbNswg/o.jpg",
+      "review_count": 135,
+      "phone": "+15103390566",
+      "location": {
+        "address1": "6200 Antioch St",
+        "zip_code": "94611",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "the-vulcan-cafe-oakland",
+      "url": "https://www.yelp.com/biz/the-vulcan-cafe-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 4,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        },
+        {
+          "title": "Cafes",
+          "alias": "cafes"
+        }
+      ],
+      "name": "The Vulcan Cafe",
+      "coordinates": {
+        "latitude": 37.7692211419344,
+        "longitude": -122.2159306705
+      },
+      "price": "$",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/ivulMD9-u6i-jSy7mKvAhw/o.jpg",
+      "review_count": 184,
+      "phone": "+15105366303",
+      "location": {
+        "address1": "915 45th Ave",
+        "zip_code": "94601",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "chao-thai-cuisine-oakland",
+      "url": "https://www.yelp.com/biz/chao-thai-cuisine-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 3.5,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Chao Thai Cuisine",
+      "coordinates": {
+        "latitude": 37.8110066199291,
+        "longitude": -122.247336625536
+      },
+      "price": "$$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/IiSO4MDUgovOiUs-GLCV1A/o.jpg",
+      "review_count": 216,
+      "phone": "+15104440708",
+      "location": {
+        "address1": "482 Lake Park Ave",
+        "zip_code": "94610",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    },
+    {
+      "id": "banana-blossom-thai-cuisine-oakland",
+      "url": "https://www.yelp.com/biz/banana-blossom-thai-cuisine-oakland?adjust_creative=nqpS3O6BlMmugVQrcuPuYA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nqpS3O6BlMmugVQrcuPuYA",
+      "rating": 3.5,
+      "categories": [
+        {
+          "title": "Thai",
+          "alias": "thai"
+        }
+      ],
+      "name": "Banana Blossom Thai Cuisine",
+      "coordinates": {
+        "latitude": 37.8073916,
+        "longitude": -122.2219233
+      },
+      "price": "$$",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/egprceTwle3x_d-1C4plyw/o.jpg",
+      "review_count": 286,
+      "phone": "+15103360990",
+      "location": {
+        "address1": "4228 Park Blvd",
+        "zip_code": "94602",
+        "city": "Oakland",
+        "state": "CA",
+        "country": "US",
+        "address3": "",
+        "address2": ""
+      }
+    }
+  ],
+  "total": 1088
+}
