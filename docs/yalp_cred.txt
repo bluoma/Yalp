@@ -1,0 +1,19 @@
+
+AppName
+Yalp_cp
+App ID
+nqpS3O6BlMmugVQrcuPuYA
+App Secret
+c8bfR7nWfDUfLL54sPgrORHy5nML3eEvbQdtB8tbtPCfVXPZEwJS0j8jbt1idL7B
+
+
+https://api.yelp.com/oauth2/token
+grant_type=client_credentials&
+client_id=nqpS3O6BlMmugVQrcuPuYA&
+client_secret=c8bfR7nWfDUfLL54sPgrORHy5nML3eEvbQdtB8tbtPCfVXPZEwJS0j8jbt1idL7B
+
+{
+  "access_token": "nIaCv6DaV7htXIy-U8vejevvvizKDYpL3O3nU82uMY70fOGLaaTDg1oyEtZvyZIRG4ghA31ioS3sEjEXz3NDTeA4uHaEOEJRrltyZVtJ9T9uLafvrrkgK22s0kz-V3Yx",
+  "expires_in": 15551999,
+  "token_type": "Bearer"
+}

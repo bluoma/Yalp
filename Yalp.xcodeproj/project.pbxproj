@@ -8,20 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		F733B77B1DAE8915005535DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B77A1DAE8915005535DF /* AppDelegate.swift */; };
-		F733B77D1DAE8915005535DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B77C1DAE8915005535DF /* ViewController.swift */; };
 		F733B7801DAE8915005535DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F733B77E1DAE8915005535DF /* Main.storyboard */; };
 		F733B7821DAE8915005535DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F733B7811DAE8915005535DF /* Assets.xcassets */; };
 		F733B7851DAE8915005535DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F733B7831DAE8915005535DF /* LaunchScreen.storyboard */; };
+		F733B78F1DAE8B1C005535DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B78C1DAE8B1C005535DF /* Constants.swift */; };
+		F733B7901DAE8B1C005535DF /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B78D1DAE8B1C005535DF /* AppearanceManager.swift */; };
+		F733B7911DAE8B1C005535DF /* JsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B78E1DAE8B1C005535DF /* JsonDownloader.swift */; };
+		F733B7991DAE94A5005535DF /* BusinessListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B7981DAE94A5005535DF /* BusinessListViewController.swift */; };
+		F733B79B1DAE95BC005535DF /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B79A1DAE95BC005535DF /* Business.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F733B7771DAE8915005535DF /* Yalp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yalp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F733B77A1DAE8915005535DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F733B77C1DAE8915005535DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F733B77F1DAE8915005535DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F733B7811DAE8915005535DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F733B7841DAE8915005535DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F733B7861DAE8915005535DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F733B78C1DAE8B1C005535DF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F733B78D1DAE8B1C005535DF /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
+		F733B78E1DAE8B1C005535DF /* JsonDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDownloader.swift; sourceTree = "<group>"; };
+		F733B7921DAE8DFF005535DF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		F733B7981DAE94A5005535DF /* BusinessListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessListViewController.swift; sourceTree = "<group>"; };
+		F733B79A1DAE95BC005535DF /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +63,51 @@
 		F733B7791DAE8915005535DF /* Yalp */ = {
 			isa = PBXGroup;
 			children = (
+				F733B7951DAE939E005535DF /* Views */,
+				F733B7941DAE9392005535DF /* Models */,
+				F733B7961DAE93A5005535DF /* Controllers */,
+				F733B7971DAE93B1005535DF /* Utils */,
+				F733B7921DAE8DFF005535DF /* README.md */,
 				F733B77A1DAE8915005535DF /* AppDelegate.swift */,
-				F733B77C1DAE8915005535DF /* ViewController.swift */,
 				F733B77E1DAE8915005535DF /* Main.storyboard */,
 				F733B7811DAE8915005535DF /* Assets.xcassets */,
 				F733B7831DAE8915005535DF /* LaunchScreen.storyboard */,
 				F733B7861DAE8915005535DF /* Info.plist */,
 			);
 			path = Yalp;
+			sourceTree = "<group>";
+		};
+		F733B7941DAE9392005535DF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F733B79A1DAE95BC005535DF /* Business.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		F733B7951DAE939E005535DF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F733B7961DAE93A5005535DF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F733B7981DAE94A5005535DF /* BusinessListViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		F733B7971DAE93B1005535DF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F733B78C1DAE8B1C005535DF /* Constants.swift */,
+				F733B78D1DAE8B1C005535DF /* AppearanceManager.swift */,
+				F733B78E1DAE8B1C005535DF /* JsonDownloader.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +142,7 @@
 				TargetAttributes = {
 					F733B7761DAE8915005535DF = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M96UWZCD49;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -136,8 +183,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F733B77D1DAE8915005535DF /* ViewController.swift in Sources */,
+				F733B7901DAE8B1C005535DF /* AppearanceManager.swift in Sources */,
+				F733B7911DAE8B1C005535DF /* JsonDownloader.swift in Sources */,
 				F733B77B1DAE8915005535DF /* AppDelegate.swift in Sources */,
+				F733B79B1DAE95BC005535DF /* Business.swift in Sources */,
+				F733B7991DAE94A5005535DF /* BusinessListViewController.swift in Sources */,
+				F733B78F1DAE8B1C005535DF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +311,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M96UWZCD49;
 				INFOPLIST_FILE = Yalp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluoma.Yalp;
@@ -272,6 +324,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M96UWZCD49;
 				INFOPLIST_FILE = Yalp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluoma.Yalp;
