@@ -9,16 +9,17 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
 
+     
     var window: UIWindow?
-
+    let downloader = JsonDownloader()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         dlog("")
         
-        let downloader = JsonDownloader()
+        downloader.delegate = self
         downloader.doAuthToken()
         
         return true
@@ -46,6 +47,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+
+    
+    func jsonDownloaderDidFinish(downloader: JsonDownloader, json: [String:AnyObject]?, response: HTTPURLResponse, error: NSError?)
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        if error != nil {
+            dlog("err: \(error)")
+            
+        }
+        else {
+            
+            if let jsonObj: [String:AnyObject] = json {
+                let token = jsonObj["access_token"] as! String
+                let expires = jsonObj["expires_in"] as! Int
+                dlog("token: \(token)")
+                dlog("expires in: \(expires) seconds")
+            }
+            else {
+                dlog("no json")
+                
+            }
+        }
+        if let urlString = response.url?.absoluteString {
+            dlog("url from response: \(urlString)")
+            
+        }
+    }
 
 }
 

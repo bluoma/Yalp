@@ -1,0 +1,7 @@
+
+Represents the number of seconds after which this access token will expire. Right now it's always 15552000, which is 180 days.
+
+2016-10-13 07:34:37.686: 15466322
+
+2016-10-13 07:36:21.203: 15466219
+

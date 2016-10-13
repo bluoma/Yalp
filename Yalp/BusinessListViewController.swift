@@ -21,7 +21,7 @@ class BusinessListViewController: UIViewController, JsonDownloaderDelegate {
         downloader.delegate = self
         let urlString = "\(yelpBusinessSearchEndpoint)?term=thai&latitude=37.785771&longitude=-122.406165&radius=30000"
         
-        //let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
+        let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
         //dlog("task \(task)")
         
     }
@@ -63,7 +63,7 @@ class BusinessListViewController: UIViewController, JsonDownloaderDelegate {
                     let businessDict = businessObj as! NSDictionary
                     let businessDto = BusinessSummaryDTO(jsonDict: businessDict)
                     resultsArray.append(businessDto)
-                    dlog("businessDTO: \(businessDto)")
+                    //dlog("businessDTO: \(businessDto)")
 
                 }
                 //businessArray = resultsArray

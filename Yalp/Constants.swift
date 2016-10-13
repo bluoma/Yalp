@@ -45,7 +45,7 @@ public var yelpCurrentAuthToken = "nIaCv6DaV7htXIy-U8vejevvvizKDYpL3O3nU82uMY70f
 public var yelpCurrentAuthTokenExpires = "15551999"  //from 10-12-2016 8am
 
 public let yelpBusinessSearchEndpoint = "https://api.yelp.com/v3/businesses/search"
-public var yelpOathBearerHeaderVKey = "Authorization"
+public var yelpOathBearerHeaderKey = "Authorization"
 public var yelpOathBearerHeaderVal = "Bearer \(yelpCurrentAuthToken)"
 
 
