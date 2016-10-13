@@ -119,7 +119,9 @@ class JsonDownloader {
     func doDownload(urlString: String) -> URLSessionDataTask?
     {
         
-        if yelpOathBearerHeaderVal.characters.count == 0 {
+        dlog("do we have an auth token: \(yelpCurrentAuthToken), char count: \(yelpCurrentAuthToken.characters.count)")
+        
+        if yelpCurrentAuthToken.isEmpty {
             dlog("we never got an auth token, oh well")
             return nil
         }
@@ -131,7 +133,7 @@ class JsonDownloader {
         
         dlog("in url: \(urlString)")
         var request = URLRequest(url: url)
-        request.setValue(yelpOathBearerHeaderVal, forHTTPHeaderField: yelpOathBearerHeaderKey)
+        request.setValue(yelpAuthBearerHeaderVal, forHTTPHeaderField: yelpAuthBearerHeaderKey)
         
         let dataTask = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
         

@@ -17,10 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        dlog("")
+        dlog("in")
         
         downloader.delegate = self
         downloader.doAuthToken()
+        
+        dlog("out")
+
         
         return true
     }
@@ -66,6 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
                 dlog("expires in: \(expires) seconds")
                 yelpCurrentAuthToken = token
                 yelpCurrentAuthTokenExpires = expires
+                
+                let notificationCenter = NotificationCenter.default
+                let notifName = NSNotification.Name.init(rawValue: yelpAuthTokenRecievedNotification)
+                notificationCenter.post(name: notifName, object: nil)
                 
             }
             else {
