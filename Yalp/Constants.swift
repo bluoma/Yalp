@@ -40,9 +40,9 @@ public let yelpOauth2PostBody = "grant_type=client_credentials&client_id=\(yelpC
 
 
 public let yelpAuthTokenName = "access_token"
-public var yelpCurrentAuthToken = "nIaCv6DaV7htXIy-U8vejevvvizKDYpL3O3nU82uMY70fOGLaaTDg1oyEtZvyZIRG4ghA31ioS3sEjEXz3NDTeA4uHaEOEJRrltyZVtJ9T9uLafvrrkgK22s0kz-V3Yx"
+public var yelpCurrentAuthToken = ""
 
-public var yelpCurrentAuthTokenExpires = "15551999"  //from 10-12-2016 8am
+public var yelpCurrentAuthTokenExpires = 0  //initially 15552000, which is 180 days.
 
 public let yelpBusinessSearchEndpoint = "https://api.yelp.com/v3/businesses/search"
 public var yelpOathBearerHeaderKey = "Authorization"

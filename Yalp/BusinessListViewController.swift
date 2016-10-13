@@ -22,7 +22,7 @@ class BusinessListViewController: UIViewController, JsonDownloaderDelegate {
         let urlString = "\(yelpBusinessSearchEndpoint)?term=thai&latitude=37.785771&longitude=-122.406165&radius=30000"
         
         let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
-        //dlog("task \(task)")
+        dlog("out task \(task)")
         
     }
 

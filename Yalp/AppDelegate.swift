@@ -64,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
                 let expires = jsonObj["expires_in"] as! Int
                 dlog("token: \(token)")
                 dlog("expires in: \(expires) seconds")
+                yelpCurrentAuthToken = token
+                yelpCurrentAuthTokenExpires = expires
+                
             }
             else {
                 dlog("no json")

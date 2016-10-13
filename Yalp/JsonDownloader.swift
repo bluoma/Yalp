@@ -16,6 +16,16 @@ protocol JsonDownloaderDelegate: class {
 
 class JsonDownloader {
     
+    private static var opq: OperationQueue = JsonDownloader.createOperationQueue()
+    
+    private static func createOperationQueue() -> OperationQueue {
+        let opq = OperationQueue()
+        opq.name = "com.yalp.netopq"
+        opq.maxConcurrentOperationCount = 1
+        dlog("opq: \(opq)")
+        return opq
+    }
+    
     var session: URLSession! = nil
     weak var delegate: JsonDownloaderDelegate? = nil
     
@@ -25,9 +35,7 @@ class JsonDownloader {
         urlconfig.timeoutIntervalForRequest = 15
         urlconfig.timeoutIntervalForResource = 15
         
-        //urlconfig.httpAdditionalHeaders = [yelpOathBearerHeaderVKey:yelpOathBearerHeaderVal]
-        
-        self.session = URLSession(configuration: urlconfig, delegate: nil, delegateQueue: nil)
+        self.session = URLSession(configuration: urlconfig, delegate: nil, delegateQueue: JsonDownloader.opq)
     }
     
     func doAuthToken() ->  URLSessionDataTask? {
@@ -110,6 +118,11 @@ class JsonDownloader {
     
     func doDownload(urlString: String) -> URLSessionDataTask?
     {
+        
+        if yelpOathBearerHeaderVal.characters.count == 0 {
+            dlog("we never got an auth token, oh well")
+            return nil
+        }
         
         guard let url = URL(string: urlString) else {
             dlog("bad url: \(urlString)")
