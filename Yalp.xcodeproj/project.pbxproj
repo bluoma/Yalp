@@ -17,6 +17,7 @@
 		F733B7911DAE8B1C005535DF /* JsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B78E1DAE8B1C005535DF /* JsonDownloader.swift */; };
 		F733B7991DAE94A5005535DF /* BusinessListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B7981DAE94A5005535DF /* BusinessListViewController.swift */; };
 		F733B79B1DAE95BC005535DF /* BusinessSummaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B79A1DAE95BC005535DF /* BusinessSummaryDTO.swift */; };
+		F7D76DC21DB01E1B00D215AC /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D76DC11DB01E1B00D215AC /* BusinessTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		F733B7921DAE8DFF005535DF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		F733B7981DAE94A5005535DF /* BusinessListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessListViewController.swift; sourceTree = "<group>"; };
 		F733B79A1DAE95BC005535DF /* BusinessSummaryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessSummaryDTO.swift; sourceTree = "<group>"; };
+		F7D76DC11DB01E1B00D215AC /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		F733B7951DAE939E005535DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F7D76DC11DB01E1B00D215AC /* BusinessTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F733B7901DAE8B1C005535DF /* AppearanceManager.swift in Sources */,
+				F7D76DC21DB01E1B00D215AC /* BusinessTableViewCell.swift in Sources */,
 				F733B7911DAE8B1C005535DF /* JsonDownloader.swift in Sources */,
 				F733B77B1DAE8915005535DF /* AppDelegate.swift in Sources */,
 				F733B79B1DAE95BC005535DF /* BusinessSummaryDTO.swift in Sources */,

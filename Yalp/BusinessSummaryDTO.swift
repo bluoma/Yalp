@@ -28,6 +28,9 @@ class BusinessSummaryDTO : CustomStringConvertible, CustomDebugStringConvertible
     var latitude: Double = 0.0
     var longitude: Double = 0.0
 
+    var fullAddress: String {
+        return "\(address) \(city), \(state) \(zipCode)"
+    }
     
     init() {
         
@@ -67,10 +70,37 @@ class BusinessSummaryDTO : CustomStringConvertible, CustomDebugStringConvertible
         if let imageUrl = jsonDict["image_url"] as? String {
             self.imageUrlString = imageUrl
         }
+        if let latitude = jsonDict.value(forKeyPath: "coordinates.latitude") as? Double {
+            self.latitude = latitude
+        }
+        if let longitude = jsonDict.value(forKeyPath: "coordinates.longitude") as? Double {
+            self.longitude = longitude
+        }
+        if let price = jsonDict["price"] as? String {
+            self.price = price
+        }
+        if let reviewCount = jsonDict["review_count"] as? Int {
+            self.reviewCount = reviewCount
+        }
+        if let cats = jsonDict["categories"] as? [[String: AnyObject]] {
+            
+            for (i, cat) in cats.enumerated() {
+                
+                if let catName = cat["title"] as? String {
+                    dlog("\(i): \(catName)")
+                    if (i < cats.count - 1) {
+                        categories += catName + ", "
+                    }
+                    else {
+                        categories += " " + catName
+                    }
+                }
+            }
+        }
     }
     
     var description: String {
-        return "id: \(businessId), name: \(name), address: \(address) \(city), \(state)  \(zipCode) imageUrl: \(imageUrlString)"
+        return "id: \(businessId), name: \(name), address: \(address) \(city), \(state)  \(zipCode) imageUrl: \(imageUrlString) cats: \(categories)"
     }
     
     var debugDescription: String {

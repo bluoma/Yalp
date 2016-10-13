@@ -7,19 +7,43 @@
 //
 
 import UIKit
+import CoreLocation
 
-class BusinessListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, JsonDownloaderDelegate {
+class BusinessListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, JsonDownloaderDelegate {
     
     @IBOutlet weak var businessTableView: UITableView!
 
     var downloader = JsonDownloader()
-    var businessArray: [BusinessSummaryDTO] = []
+    var businessArray: [BusinessSummaryDTO] = [] {
+        
+        didSet {
+            dlog("didSet array")
+            
+            for business in businessArray {
+                
+                let loc = CLLocation(latitude: business.latitude, longitude: business.longitude)
+                if (currentLocation != nil) {
+                    let distance = loc.distance(from: currentLocation!)
+                    dlog("distance: \(distance) m for address: \(business.fullAddress)")
+                }
+                else {
+                    dlog("currentLocation is unknown")
+                }
+            }
+        }
+    }
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         dlog("in")
+        //37.87159, -122.27275 berkeley
+        locationManager.distanceFilter = 100
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
         
         let notificationCenter = NotificationCenter.default
         let notifName = NSNotification.Name.init(rawValue: yelpAuthTokenRecievedNotification)
@@ -28,6 +52,8 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         downloader.delegate = self
         
         dlog("out")
+        
+        
 
     }
 
@@ -37,15 +63,17 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        dlog("segue: \(segue.identifier)")
     }
-    */
+    
 
     
     func authTokenReceived(notification: NSNotification) {
@@ -81,7 +109,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                     let businessDict = businessObj as! NSDictionary
                     let businessDto = BusinessSummaryDTO(jsonDict: businessDict)
                     resultsArray.append(businessDto)
-                    //dlog("businessDTO: \(businessDto)")
+                    dlog("businessDTO: \(businessDto)")
 
                 }
                 businessArray = resultsArray
@@ -124,13 +152,40 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! BusinessTableViewCell
         
         let businessSummary = businessArray[indexPath.row]
         
-        cell?.textLabel?.text = businessSummary.businessId
+        cell.businessNameLabel.text = businessSummary.name
+        cell.reivewsLabel.text = "\(businessSummary.reviewCount) reviews"
+        cell.addressLabel.text = businessSummary.fullAddress
+        cell.categoryLabel.text = businessSummary.categories
+        cell.distanceLabel.text = businessSummary.distance
+        cell.dollarLabel.text = businessSummary.price
         
-        return cell!
+        return cell
+    }
+    
+    
+    //MARK: - CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
+    {
+        dlog("status: \(status.rawValue)")
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        dlog("error: \(error)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        dlog("locations: \(locations)")
+        
+        let currentLoc = locations.last
+        currentLocation = currentLoc
     }
 
 }
