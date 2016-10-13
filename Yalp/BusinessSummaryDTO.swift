@@ -21,7 +21,7 @@ class BusinessSummaryDTO : CustomStringConvertible, CustomDebugStringConvertible
     var urlString: String = ""
     var imageUrlString: String = ""
     var categories: String = ""
-    var distance: String = ""
+    var distance: Int = -1
     var reviewCount: Int = 0
     var rating: Double = 0.0
     var price: String = ""

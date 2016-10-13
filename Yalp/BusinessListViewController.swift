@@ -25,11 +25,13 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                 if (currentLocation != nil) {
                     let distance = loc.distance(from: currentLocation!)
                     dlog("distance: \(distance) m for address: \(business.fullAddress)")
+                    business.distance = Int(distance)
                 }
                 else {
                     dlog("currentLocation is unknown")
                 }
             }
+            businessTableView.reloadData()
         }
     }
     var locationManager = CLLocationManager()
@@ -114,7 +116,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 businessArray = resultsArray
                 dlog("businessDTO count: \(resultsArray.count)")
-                businessTableView.reloadData()
+                
 
             }
             else {
@@ -160,7 +162,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         cell.reivewsLabel.text = "\(businessSummary.reviewCount) reviews"
         cell.addressLabel.text = businessSummary.fullAddress
         cell.categoryLabel.text = businessSummary.categories
-        cell.distanceLabel.text = businessSummary.distance
+        cell.distanceLabel.text = "\(businessSummary.distance) m"
         cell.dollarLabel.text = businessSummary.price
         
         return cell
