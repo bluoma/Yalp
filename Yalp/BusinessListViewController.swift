@@ -19,19 +19,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         didSet {
             dlog("didSet array")
             
-            for business in businessArray {
-                
-                let loc = CLLocation(latitude: business.latitude, longitude: business.longitude)
-                if (currentLocation != nil) {
-                    let distance = loc.distance(from: currentLocation!)
-                    dlog("distance: \(distance) m for address: \(business.fullAddress)")
-                    business.distance = Int(distance)
-                }
-                else {
-                    dlog("currentLocation is unknown")
-                }
-            }
-            businessTableView.reloadData()
+            updateLocations()
         }
     }
     var locationManager = CLLocationManager()
@@ -42,8 +30,8 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         
         // Do any additional setup after loading the view.
         dlog("in")
-        //37.87159, -122.27275 berkeley
-        locationManager.distanceFilter = 100
+        
+        locationManager.distanceFilter = 100 //meters
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
@@ -55,9 +43,28 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         
         dlog("out")
         
-        
-
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let locAuthStatus = CLLocationManager.authorizationStatus()
+        
+        if locAuthStatus == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        let locAuthStatus = CLLocationManager.authorizationStatus()
+        
+        if locAuthStatus == .authorizedWhenInUse {
+            locationManager.stopUpdatingLocation()
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -116,8 +123,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 businessArray = resultsArray
                 dlog("businessDTO count: \(resultsArray.count)")
-                
-
+                //table view is refreshed by property observer on businessArray
             }
             else {
                 dlog("no json")
@@ -186,8 +192,28 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         dlog("locations: \(locations)")
         
-        let currentLoc = locations.last
-        currentLocation = currentLoc
+        if let currentLoc = locations.last {
+            currentLocation = currentLoc
+            updateLocations()
+        }
+        dlog("hopefully this is the main thread: \(Thread.current)")
     }
 
+    
+    func updateLocations() {
+        
+        for business in businessArray {
+            
+            let loc = CLLocation(latitude: business.latitude, longitude: business.longitude)
+            if (currentLocation != nil) {
+                let distance = loc.distance(from: currentLocation!)
+                dlog("distance: \(distance) m for address: \(business.fullAddress)")
+                business.distance = Int(distance)
+            }
+            else {
+                dlog("currentLocation is unknown")
+            }
+        }
+        businessTableView.reloadData()
+    }
 }
