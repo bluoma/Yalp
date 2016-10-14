@@ -168,7 +168,10 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         cell.reivewsLabel.text = "\(businessSummary.reviewCount) reviews"
         cell.addressLabel.text = businessSummary.fullAddress
         cell.categoryLabel.text = businessSummary.categories
-        cell.distanceLabel.text = "\(businessSummary.distance) m"
+        
+        let miles: Double = Double(businessSummary.distance) * 0.000621371
+        
+        cell.distanceLabel.text = "\(miles) mi"
         cell.dollarLabel.text = businessSummary.price
         
         return cell
