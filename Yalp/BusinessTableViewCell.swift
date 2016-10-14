@@ -11,6 +11,8 @@ import UIKit
 class BusinessTableViewCell: UITableViewCell {
     
     @IBOutlet weak var businessImageView: UIImageView!
+    @IBOutlet weak var ratingImageView: UIImageView!
+    @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var businessNameLabel: UILabel!
     @IBOutlet weak var reivewsLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
@@ -18,6 +20,9 @@ class BusinessTableViewCell: UITableViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var dollarLabel: UILabel!
 
+    var imageUrlString: String? = nil
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

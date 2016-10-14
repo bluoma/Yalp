@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
                 yelpCurrentAuthTokenExpires = expires
                 
                 let notificationCenter = NotificationCenter.default
-                let notifName = NSNotification.Name.init(rawValue: yelpAuthTokenRecievedNotification)
+                let notifName = NSNotification.Name(yelpAuthTokenRecievedNotification)
                 notificationCenter.post(name: notifName, object: nil)
                 
             }

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import AFNetworking
 
 class BusinessListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, JsonDownloaderDelegate {
     
@@ -36,7 +37,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         locationManager.requestWhenInUseAuthorization()
         
         let notificationCenter = NotificationCenter.default
-        let notifName = NSNotification.Name.init(rawValue: yelpAuthTokenRecievedNotification)
+        let notifName = NSNotification.Name(yelpAuthTokenRecievedNotification)
         notificationCenter.addObserver(self, selector: #selector(BusinessListViewController.authTokenReceived(notification:)), name: notifName, object: nil)
 
         downloader.delegate = self
@@ -92,7 +93,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func doDownload() {
-        let urlString = "\(yelpBusinessSearchEndpoint)?term=thai&latitude=37.785771&longitude=-122.406165&radius=30000"
+        let urlString = "\(yelpBusinessSearchEndpoint)?term=thai&location=San%20Francisco&radius=30000&limit=50&sort_by=distance"
         
         let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
         dlog("out task \(task)")
@@ -169,10 +170,45 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         cell.addressLabel.text = businessSummary.fullAddress
         cell.categoryLabel.text = businessSummary.categories
         
-        let miles: Double = Double(businessSummary.distance) * 0.000621371
-        
-        cell.distanceLabel.text = "\(miles) mi"
+        if (businessSummary.distance >= 0) {
+            let miles: Double = Double(businessSummary.distance) * 0.000621371
+            cell.distanceLabel.text = String(format:"%.02f mi", miles)
+        }
+        else {
+            cell.distanceLabel.text = "?? mi"
+        }
         cell.dollarLabel.text = businessSummary.price
+        cell.ratingLabel.text = String(businessSummary.rating)
+        if let imageUrl = URL(string: businessSummary.imageUrlString) {
+            cell.businessImageView.setImageWith(imageUrl)
+        
+            
+            let urlRequest: URLRequest = URLRequest(url:imageUrl)
+            cell.imageUrlString = businessSummary.imageUrlString
+            cell.businessImageView.setImageWith(_:urlRequest, placeholderImage: nil,
+                                                  success: { (request: URLRequest, response:HTTPURLResponse?, image: UIImage) -> Void in
+                                                    //nil `response` means image came from cache
+                                                    if (response != nil) {
+                                                        cell.businessImageView.alpha = 0.0;
+                                                        cell.businessImageView.image = image
+                                                        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                                                            cell.businessImageView.alpha = 1.0
+                                                        })
+                                                    }
+                                                    else {
+                                                        cell.businessImageView.image = image
+                                                    }
+                },
+                                                  failure: { (request: URLRequest, response: HTTPURLResponse?, error: Error) -> Void in
+                                                    dlog("image fetch failed: \(error) for indexPath: \(indexPath)")
+                                                    cell.businessImageView.image = nil})
+
+        }
+        else {
+            dlog("no imageurl: \(businessSummary.name)")
+            cell.businessImageView.image = nil
+        }
+
         
         return cell
     }

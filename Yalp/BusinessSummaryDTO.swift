@@ -82,6 +82,9 @@ class BusinessSummaryDTO : CustomStringConvertible, CustomDebugStringConvertible
         if let reviewCount = jsonDict["review_count"] as? Int {
             self.reviewCount = reviewCount
         }
+        if let rating = jsonDict["rating"] as? Double {
+            self.rating = rating
+        }
         if let cats = jsonDict["categories"] as? [[String: AnyObject]] {
             
             for (i, cat) in cats.enumerated() {
