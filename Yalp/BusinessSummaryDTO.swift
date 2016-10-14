@@ -90,7 +90,6 @@ class BusinessSummaryDTO : CustomStringConvertible, CustomDebugStringConvertible
             for (i, cat) in cats.enumerated() {
                 
                 if let catName = cat["title"] as? String {
-                    dlog("\(i): \(catName)")
                     if (i < cats.count - 1) {
                         categories += catName + ", "
                     }

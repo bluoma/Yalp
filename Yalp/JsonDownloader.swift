@@ -118,7 +118,7 @@ class JsonDownloader {
     
     func doDownload(urlString: String) -> URLSessionDataTask?
     {
-        
+        print("urlString: \(urlString)")
         dlog("do we have an auth token: \(yelpCurrentAuthToken), char count: \(yelpCurrentAuthToken.characters.count)")
         
         if yelpCurrentAuthToken.isEmpty {

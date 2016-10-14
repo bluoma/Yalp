@@ -57,8 +57,10 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //user pressed search button, actually search. reset to false after FiltersViewController dismissed
     var doSearch: Bool = false
     
-    
-    
+    //if user types in location string, use it going forward
+    var useCustomLocationString = false
+
+    var placemark: CLPlacemark? = nil
     
     func yelpQueryString() -> String {
         
@@ -88,6 +90,8 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
             categoriesString = String(format: "&categories=%@", catString)
         }
         
+        let locationString = String(format:"&location=%@", location)
+        
         let qString = String(format:"%@%@%@%@%@%@", termString, latLonString, radiusString, sortString, dealsString, categoriesString)
         
         return qString
@@ -95,11 +99,11 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     
     
     public var description: String {
-        return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius)"
+        return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius), placemark: \(placemark)"
     }
     
     var debugDescription: String {
-        return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius)"
+        return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius), placemark: \(placemark)"
     }
 }
 

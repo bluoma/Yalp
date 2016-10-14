@@ -16,7 +16,7 @@ class FiltersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dlog("")
+        dlog("businessFilter: \(businessFilter)")
         // Do any additional setup after loading the view.
     }
 

@@ -25,7 +25,9 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     var locationManager = CLLocationManager()
-    var currentLocation: CLLocation?
+    @NSCopying var currentLocation: CLLocation?
+    var geoCoder = CLGeocoder()
+    var currentPlacemark: CLPlacemark?
     
     //MARK: - ViewLifeCycle
     override func viewDidLoad() {
@@ -85,17 +87,23 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             
             let modalNavVc = segue.destination as! UINavigationController
             let filtersVc = modalNavVc.topViewController as! FiltersViewController
-         
-            if (currentLocation != nil) {
-                let currentLoc = CLLocation(latitude: currentLocation!.coordinate.latitude, longitude: currentLocation!.coordinate.longitude)
-                self.businessFilter.latLon = currentLoc
+            
+            self.businessFilter.doSearch = false
+
+            if let currentLocation = self.currentLocation {
+                self.businessFilter.latLon = currentLocation
             }
             else {
                 //use SF
-                let currentLoc = CLLocation(latitude: sfLatLon.coordinate.latitude, longitude: sfLatLon.coordinate.longitude)
-                self.businessFilter.latLon = currentLoc
+                self.businessFilter.latLon = sfLatLon
             }
-            self.businessFilter.doSearch = false
+            
+            if let currentPlacemark = self.currentPlacemark {
+                self.businessFilter.placemark = currentPlacemark
+            }
+            else {
+                //TODO generate default placemark
+            }
             filtersVc.businessFilter = self.businessFilter
         }
         
@@ -119,12 +127,14 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     
     func doSearchDownload() {
         
-        var qString = self.businessFilter.yelpQueryString() + "&limit=50"
-        
-        let urlString = "\(yelpBusinessSearchEndpoint)?\(qString)"
+        let qString = self.businessFilter.yelpQueryString() + "&limit=50"
+        if let qString = qString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            print(qString)
+            let urlString = "\(yelpBusinessSearchEndpoint)?\(qString)"
 
-        let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
-        dlog("out task \(task)")
+            let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
+            dlog("out task \(task)")
+        }
     }
 
     
@@ -155,12 +165,11 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                     let businessDict = businessObj as! NSDictionary
                     let businessDto = BusinessSummaryDTO(jsonDict: businessDict)
                     resultsArray.append(businessDto)
-                    dlog("businessDTO: \(businessDto)")
-
+                    //dlog("businessDTO: \(businessDto)")
                 }
                 businessArray = resultsArray
                 dlog("businessDTO count: \(resultsArray.count)")
-                //table view is refreshed by property observer on businessArray
+                //table view is refreshed by property observer on businessArray in call updateLocations()
             }
             else {
                 dlog("no json")
@@ -222,7 +231,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             let urlRequest: URLRequest = URLRequest(url:imageUrl)
             cell.imageUrlString = businessSummary.imageUrlString
             cell.businessImageView.setImageWith(_:urlRequest, placeholderImage: nil,
-                                                  success: { (request: URLRequest, response:HTTPURLResponse?, image: UIImage) -> Void in
+                                                  success: { (request: URLRequest, response: HTTPURLResponse?, image: UIImage) -> Void in
                                                     //nil `response` means image came from cache
                                                     if (response != nil) {
                                                         cell.businessImageView.alpha = 0.0;
@@ -250,7 +259,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    //MARK: - CLLocationManagerDelegate
+    //MARK: - CoreLocation
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
     {
@@ -268,8 +277,28 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         dlog("locations: \(locations)")
         
         if let currentLoc = locations.last {
-            currentLocation = currentLoc
-            updateLocations()
+            if currentLocation != currentLoc {
+                currentLocation = currentLoc
+                geoCoder.reverseGeocodeLocation(currentLocation!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
+                    if let error = error {
+                        dlog("reverse geocode err: \(error)")
+                    }
+                    else if let placemarks = placemarks {
+                        for place in placemarks {
+                            dlog("placeMark: \(place)")
+                        }
+                        if let currentMark = placemarks.last {
+                            if currentMark != self.currentPlacemark {
+                                self.currentPlacemark = currentMark
+                            }
+                        }
+                    }
+                    else {
+                        dlog("both error and placemarks are nil ?")
+                    }
+                })
+                updateLocations()
+            }
         }
         dlog("hopefully this is the main thread: \(Thread.current)")
     }
@@ -293,5 +322,5 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    
+    //([CLPlacemark]?, Error?) -> Swift.Void
 }
