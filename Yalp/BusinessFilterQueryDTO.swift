@@ -18,7 +18,7 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //If term isn’t included we search everything. 
     //The term keyword also accepts business names such as "Starbucks".
     //`term`: string. Optional search term (e.g. "food", "restaurants").
-    var searchByTerm: String = "Restaurants"
+    var searchTerm: String = "Restaurants"
     
     //Specifies the combination of "address, neighborhood, city, state or zip, optional country"
     //to be used when searching for businesses.
@@ -42,11 +42,11 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //For example, "bars,french" will filter by Bars and French.
     //The category identifier should be used (for example "discgolf", not "Disc Golf").
     //`categories`: string. Optional categories to filter the search results with.
-    var categories: [String] = []
+    var categories: [String] = ["mexican", "burmese"]
     
     //Sort the results by one of the these modes: best_match, rating, review_count or distance.
     //`sort_by`: string. Optional. By default it's best_match.
-    var sortBy: String = "best_match"
+    var sortBy: String = "review_count"
     
     //Additional filters to search businesses.
     //You can use multiple attribute filters at the same time by providing a comma separated string,
@@ -54,13 +54,52 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //`attributes`: string. Optional. Currently, the valid values are hot_and_new and deals.
     var includeDeals: Bool = false
     
+    //user pressed search button, actually search. reset to false after FiltersViewController dismissed
+    var doSearch: Bool = false
+    
+    
+    
+    
+    func yelpQueryString() -> String {
+        
+        let termString = String(format: "term=%@", searchTerm)
+        
+        let latLonString = String(format: "&latitude=%f&longitude=%f", latLon.coordinate.latitude, latLon.coordinate.longitude)
+        
+        let radiusString = String(format: "&radius=%d", searchRadius)
+        
+        let sortString = String(format: "&sort_by=%@", sortBy)
+
+        var dealsString = ""
+        if (includeDeals) {
+            dealsString = String(format: "&attributes=%@", "deals")
+        }
+        var categoriesString = ""
+        if categories.count > 0 {
+            
+            var catString = ""
+            for (i, cat) in categories.enumerated() {
+                catString += cat
+                if i < categories.count - 1 {
+                    catString += ","
+                }
+            }
+            
+            categoriesString = String(format: "&categories=%@", catString)
+        }
+        
+        let qString = String(format:"%@%@%@%@%@%@", termString, latLonString, radiusString, sortString, dealsString, categoriesString)
+        
+        return qString
+    }
+    
     
     public var description: String {
-        return "searchByTerm: \(searchByTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius)"
+        return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius)"
     }
     
     var debugDescription: String {
-        return "searchByTerm: \(searchByTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius)"
+        return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius)"
     }
 }
 

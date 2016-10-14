@@ -48,13 +48,13 @@ class FiltersViewController: UIViewController {
     @IBAction func cancelPressed(_ sender: AnyObject) {
         dlog("")
         dismiss(animated: true, completion:nil)
-        
+        businessFilter?.doSearch = false
     }
     
     //MARK: - Actions
     @IBAction func searchPressed(_ sender: AnyObject) {
         dlog("")
         dismiss(animated: true, completion:nil)
-
+        businessFilter?.doSearch = true
     }
 }

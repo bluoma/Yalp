@@ -86,6 +86,16 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             let modalNavVc = segue.destination as! UINavigationController
             let filtersVc = modalNavVc.topViewController as! FiltersViewController
          
+            if (currentLocation != nil) {
+                let currentLoc = CLLocation(latitude: currentLocation!.coordinate.latitude, longitude: currentLocation!.coordinate.longitude)
+                self.businessFilter.latLon = currentLoc
+            }
+            else {
+                //use SF
+                let currentLoc = CLLocation(latitude: sfLatLon.coordinate.latitude, longitude: sfLatLon.coordinate.longitude)
+                self.businessFilter.latLon = currentLoc
+            }
+            self.businessFilter.doSearch = false
             filtersVc.businessFilter = self.businessFilter
         }
         
@@ -103,11 +113,22 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     //MARK: - JsonDownloader
     func authTokenReceived(notification: NSNotification) {
         dlog("got auth token, let's download: \(notification)")
-        doDownload()
+        doSearchDownload()
 
     }
     
-    func doDownload() {
+    func doSearchDownload() {
+        
+        var qString = self.businessFilter.yelpQueryString() + "&limit=50"
+        
+        let urlString = "\(yelpBusinessSearchEndpoint)?\(qString)"
+
+        let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
+        dlog("out task \(task)")
+    }
+
+    
+    func doDownloadThaiSf() {
         let urlString = "\(yelpBusinessSearchEndpoint)?term=thai&location=San%20Francisco&radius=30000&limit=50&sort_by=distance"
         
         let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
@@ -179,7 +200,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! BusinessTableViewCell
         
         let businessSummary = businessArray[indexPath.row]
-        
+        cell.businessImageView.image = nil
         cell.businessNameLabel.text = businessSummary.name
         cell.reivewsLabel.text = "\(businessSummary.reviewCount) reviews"
         cell.addressLabel.text = businessSummary.fullAddress

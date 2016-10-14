@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 //MARK: - dlog
 public func dlog(_ message: String, _ filePath: String = #file, _ functionName: String = #function, _ lineNum: Int = #line)
@@ -39,7 +40,7 @@ public func alog(_ message: String, _ filePath: String = #file, _ functionName: 
     NSLog(logString)
 }
 
-
+public var sfLatLon: CLLocation = CLLocation(latitude: 37.785771, longitude: -122.406165) //SF
 
 public let defaultAppearanceKey = "defaultAppearanceKey"
 
