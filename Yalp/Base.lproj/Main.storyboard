@@ -30,7 +30,7 @@
                                             <frame key="frameInset" width="375" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Jq-Ml-G6W" userLabel="BusinessIV">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Jq-Ml-G6W" userLabel="BusinessIV">
                                                     <frame key="frameInset" minX="8" width="65" height="65"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -105,21 +105,57 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Businesses" id="UtP-Xg-2p4">
+                    <navigationItem key="navigationItem" title="Yalp" id="UtP-Xg-2p4">
                         <barButtonItem key="backBarButtonItem" title="Back" id="5Rg-iH-Gdn"/>
+                        <barButtonItem key="leftBarButtonItem" title="Filters" id="uY4-F6-1vG">
+                            <connections>
+                                <action selector="filtersClicked:" destination="BYZ-38-t0r" id="NvW-7a-yM6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="businessTableView" destination="R0D-6Y-Eeb" id="flr-2y-ozD"/>
+                        <segue destination="zgn-Cf-jeB" kind="presentation" identifier="FiltersModalSegue" id="59L-Lg-Qul"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="900" y="-559.07046476761627"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Filters-->
+        <scene sceneID="WTi-4b-5oo">
+            <objects>
+                <viewController id="SzR-xE-9vs" customClass="FiltersViewController" customModule="Yalp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bt9-Sz-SHY"/>
+                        <viewControllerLayoutGuide type="bottom" id="2JA-Xi-xgF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cdX-A2-BFx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Filters" id="ioC-Ls-mBF">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="PKT-eG-WZg">
+                            <connections>
+                                <action selector="cancelPressed:" destination="SzR-xE-9vs" id="d0g-pp-V7b"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="j44-W5-LcE">
+                            <connections>
+                                <action selector="searchPressed:" destination="SzR-xE-9vs" id="mQx-ZP-WiK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tSL-9m-5TO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2567" y="-1242"/>
+        </scene>
+        <!--BusinessNavigationController-->
         <scene sceneID="0LC-sF-kmw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ths-4y-WaU" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ths-4y-WaU" userLabel="BusinessNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k7B-FZ-9Fu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -133,6 +169,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rxH-xx-R5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="-559.07046476761627"/>
+        </scene>
+        <!--FiltersNavigationController-->
+        <scene sceneID="59j-Qt-utl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zgn-Cf-jeB" userLabel="FiltersNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="U57-9A-EyI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="SzR-xE-9vs" kind="relationship" relationship="rootViewController" id="uzc-wE-456"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zWf-xO-aZz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1734" y="-1241"/>
         </scene>
     </scenes>
 </document>

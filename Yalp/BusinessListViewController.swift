@@ -75,12 +75,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
 
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
         dlog("segue: \(segue.identifier)")
     }
     
@@ -255,4 +250,13 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         }
         businessTableView.reloadData()
     }
+    
+    @IBAction func filtersClicked(_ sender: AnyObject) {
+        
+        dlog("")
+        
+        performSegue(withIdentifier: "FiltersModalSegue", sender:self)
+    }
+    
+    
 }

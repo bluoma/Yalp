@@ -26,6 +26,8 @@ class BusinessTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        businessImageView.layer.cornerRadius = 3
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
