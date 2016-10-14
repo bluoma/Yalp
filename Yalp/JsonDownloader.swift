@@ -108,7 +108,7 @@ class JsonDownloader {
             DispatchQueue.main.async {
                 self.delegate?.jsonDownloaderDidFinish(downloader: self, json: json, response: httpResp, error: returnedError)
             }
-            
+            dlog("out closure on thread: \(Thread.current)")
         })
         
         dataTask?.resume()
@@ -194,7 +194,8 @@ class JsonDownloader {
             DispatchQueue.main.async {
                 self.delegate?.jsonDownloaderDidFinish(downloader: self, json: json, response: httpResp, error: returnedError)
             }
-            
+            dlog("out closure on thread: \(Thread.current)")
+
         })
         
         dataTask.resume()

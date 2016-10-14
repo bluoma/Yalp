@@ -1,3 +1,7 @@
+The filters you should actually have are: category, sort (best match, distance, highest rated), distance, deals (on/off).
+
+-----------------------------
+
 term	string	Optional. Search term (e.g. "food", "restaurants"). 
 If term isn’t included we search everything. The term keyword also accepts business names such as "Starbucks".
 

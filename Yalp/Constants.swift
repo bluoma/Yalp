@@ -62,8 +62,7 @@ public var yelpAuthBearerHeaderVal = "Bearer \(yelpCurrentAuthToken)"
 public let yelpAuthTokenRecievedNotification = "yelpAuthTokenRecievedNotification"
 
 
-
-public let yelpFoodCategories =
+public let yelpFoodCategories: [[String:String]] =
                         [["name" : "Afghan", "code": "afghani"],
                          ["name" : "African", "code": "african"],
                          ["name" : "American, New", "code": "newamerican"],

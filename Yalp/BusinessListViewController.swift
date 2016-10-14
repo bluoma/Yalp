@@ -14,6 +14,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var businessTableView: UITableView!
 
+    var businessFilter = BusinessFilterQueryDTO()
     var downloader = JsonDownloader()
     var businessArray: [BusinessSummaryDTO] = [] {
         
@@ -26,6 +27,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     
+    //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +56,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         if locAuthStatus == .authorizedWhenInUse {
             locationManager.startUpdatingLocation()
         }
+        dlog("filterQuery: \(businessFilter)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,10 +80,27 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         dlog("segue: \(segue.identifier)")
+        
+        if (segue.identifier == "FiltersModalSegue") {
+            
+            let modalNavVc = segue.destination as! UINavigationController
+            let filtersVc = modalNavVc.topViewController as! FiltersViewController
+         
+            filtersVc.businessFilter = self.businessFilter
+        }
+        
+        
     }
     
+    @IBAction func filtersClicked(_ sender: AnyObject) {
+        
+        dlog("")
+        
+        performSegue(withIdentifier: "FiltersModalSegue", sender:self)
+    }
 
-    
+
+    //MARK: - JsonDownloader
     func authTokenReceived(notification: NSNotification) {
         dlog("got auth token, let's download: \(notification)")
         doDownload()
@@ -251,12 +271,6 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         businessTableView.reloadData()
     }
     
-    @IBAction func filtersClicked(_ sender: AnyObject) {
-        
-        dlog("")
-        
-        performSegue(withIdentifier: "FiltersModalSegue", sender:self)
-    }
     
     
 }

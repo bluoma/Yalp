@@ -10,6 +10,9 @@ import UIKit
 
 class FiltersViewController: UIViewController {
 
+    var businessFilter: BusinessFilterQueryDTO?
+
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,6 +20,15 @@ class FiltersViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let filter = businessFilter {
+            filter.sortBy = "distance"
+            filter.includeDeals = true
+            filter.categories = ["thai", "burmese"]
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
