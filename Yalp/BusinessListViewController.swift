@@ -91,7 +91,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             self.businessFilter.doSearch = false
 
             if let currentLocation = self.currentLocation {
-                self.businessFilter.latLon = currentLocation
+                self.businessFilter.latLon = locationFromLocation(loc: currentLocation)
             }
             else {
                 //use SF
@@ -99,7 +99,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             }
             
             if let currentPlacemark = self.currentPlacemark {
-                self.businessFilter.placemark = currentPlacemark
+                self.businessFilter.placemark = CLPlacemark(placemark: currentPlacemark)
             }
             else {
                 //TODO generate default placemark

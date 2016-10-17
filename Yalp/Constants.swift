@@ -236,3 +236,11 @@ public let yelpFoodCategories: [[String:String]] =
 
 
 
+func locationFromLocation(loc: CLLocation) -> CLLocation {
+    
+    var newLoc = CLLocation(coordinate: loc.coordinate, altitude: loc.altitude, horizontalAccuracy: loc.horizontalAccuracy, verticalAccuracy: loc.verticalAccuracy, timestamp: loc.timestamp)
+    
+    
+    return newLoc
+    
+}

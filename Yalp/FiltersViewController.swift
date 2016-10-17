@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
 class FiltersViewController: UIViewController {
 
     var businessFilter: BusinessFilterQueryDTO?
+    var geoCoder = CLGeocoder()
+    var currentPlacemark: CLPlacemark?
+
 
     //MARK: - View Lifecycle
     override func viewDidLoad() {
