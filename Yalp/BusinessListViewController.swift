@@ -14,6 +14,8 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var businessTableView: UITableView!
 
+    var businessDownloadTask: URLSessionDataTask?
+    var authTokenReceived = false
     var businessFilter = BusinessFilterQueryDTO()
     var downloader = JsonDownloader()
     var businessArray: [BusinessSummaryDTO] = [] {
@@ -36,10 +38,6 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         // Do any additional setup after loading the view.
         dlog("in")
         
-        locationManager.distanceFilter = 100 //meters
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        
         let notificationCenter = NotificationCenter.default
         let notifName = NSNotification.Name(yelpAuthTokenRecievedNotification)
         notificationCenter.addObserver(self, selector: #selector(BusinessListViewController.authTokenReceived(notification:)), name: notifName, object: nil)
@@ -58,7 +56,11 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         if locAuthStatus == .authorizedWhenInUse {
             locationManager.startUpdatingLocation()
         }
-        dlog("filterQuery: \(businessFilter)")
+        dlog("filterQuery: \(businessFilter.doSearch)")
+        
+        if businessFilter.doSearch {
+            
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,20 +123,24 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     //MARK: - JsonDownloader
     func authTokenReceived(notification: NSNotification) {
         dlog("got auth token, let's download: \(notification)")
-        doSearchDownload()
-
+        authTokenReceived = true
+        
+        locationManager.distanceFilter = 100 //meters
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
+        //doSearchDownload()
     }
     
     func doSearchDownload() {
-        
-        let qString = self.businessFilter.yelpQueryString() + "&limit=50"
-        if let qString = qString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            print(qString)
-            let urlString = "\(yelpBusinessSearchEndpoint)\(qString)"
-
-            let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
-            dlog("out task \(task)")
+        if let task = businessDownloadTask {
+            task.cancel()
         }
+        let qString = self.businessFilter.yelpQueryString() + "&limit=50"
+        let urlString = "\(yelpBusinessSearchEndpoint)\(qString)"
+        businessDownloadTask = downloader.doDownload(urlString: urlString)
+        dlog("out task \(self.businessDownloadTask)")
+        
     }
 
     
@@ -297,7 +303,12 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                         dlog("both error and placemarks are nil ?")
                     }
                 })
-                updateLocations()
+                if businessArray.count > 0 {
+                    updateLocations()
+                }
+                else {
+                    doSearchDownload()
+                }
             }
         }
         dlog("hopefully this is the main thread: \(Thread.current)")

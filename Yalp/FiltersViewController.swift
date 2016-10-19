@@ -32,7 +32,9 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         if let filter = businessFilter {
             filter.sortBy = "distance"
             filter.includeDeals = true
-            filter.categories = ["thai", "burmese"]
+            filter.categories = ["chinese", "burmese"]
+            
+            
         }
     }
     
@@ -67,6 +69,17 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     @IBAction func locationTextChanged(_ sender: AnyObject) {
         //dlog("sender: \(sender)")
+        let textField = sender as! UITextField
+        if let locationText = textField.text {
+            if locationText.characters.count == 0 {
+                self.businessFilter?.useCustomLocationString = false
+                dlog("loctext empty")
+            }
+        }
+        else {
+            self.businessFilter?.useCustomLocationString = false
+            dlog("loctext empty")
+        }
     }
 
     
@@ -81,41 +94,15 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        if let locationText = textField.text {
-        
-            geoCoder.geocodeAddressString(locationText, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-                
-                if let place = placemarks?.last {
-                    
-                    dlog("last place: \(place)")
-                    
-                }
-                
-            })
-            
-            
+        if let locationText = textField.text,
+            locationText.characters.count > 0 {
+            dlog("forward geocoding loctext: \(locationText)")
+            forwardGeocode(locationText: locationText)
         }
-        /*
-        geoCoder.reverseGeocodeLocation(currentLocation!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-            if let error = error {
-                dlog("reverse geocode err: \(error)")
-            }
-            else if let placemarks = placemarks {
-                for place in placemarks {
-                    dlog("placeMark: \(place)")
-                }
-                if let currentMark = placemarks.last {
-                    if currentMark != self.currentPlacemark {
-                        self.currentPlacemark = currentMark
-                    }
-                }
-            }
-            else {
-                dlog("both error and placemarks are nil ?")
-            }
-        })
-        */
-        dlog("")
+        else {
+            dlog("loctext empty")
+            self.businessFilter?.useCustomLocationString = false
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -123,6 +110,10 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return true
     }
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        self.businessFilter?.useCustomLocationString = false
+        return true
+    }
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -155,4 +146,36 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
 
 
+    //MARK: - CoreLocation
+    
+    func forwardGeocode(locationText: String) -> Void {
+        
+        geoCoder.geocodeAddressString(locationText, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
+            
+            if let place = placemarks?.last {
+                
+                dlog("last place: \(place)")
+                
+                dlog("name: \(place.name)")
+                dlog("administrativeArea: \(place.administrativeArea)")
+                dlog("subAdministrativeArea: \(place.subAdministrativeArea)")
+                dlog("locality: \(place.locality)")
+                dlog("subLocality: \(place.subLocality)")
+                dlog("postalCode: \(place.postalCode)")
+
+                dlog("placeCoord: \(place.location)")
+                
+                self.businessFilter?.placemark = place
+                self.businessFilter?.useCustomLocationString = true
+                
+            }
+            else if error != nil {
+                dlog("geocode error for: \(locationText), err: \(error)")
+                self.businessFilter?.useCustomLocationString = false
+            }
+        })
+
+        
+    }
+    
 }
