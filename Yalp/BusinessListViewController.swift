@@ -285,6 +285,9 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         if let currentLoc = locations.last {
             if currentLocation != currentLoc {
                 currentLocation = currentLoc
+                
+                businessFilter.latLon = locationFromLocation(loc: currentLoc)
+                
                 geoCoder.reverseGeocodeLocation(currentLocation!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
                     if let error = error {
                         dlog("reverse geocode err: \(error)")
@@ -296,6 +299,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                         if let currentMark = placemarks.last {
                             if currentMark != self.currentPlacemark {
                                 self.currentPlacemark = currentMark
+                                self.businessFilter.placemark = CLPlacemark(placemark: currentMark)
                             }
                         }
                     }
