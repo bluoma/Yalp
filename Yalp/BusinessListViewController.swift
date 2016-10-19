@@ -130,7 +130,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         let qString = self.businessFilter.yelpQueryString() + "&limit=50"
         if let qString = qString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             print(qString)
-            let urlString = "\(yelpBusinessSearchEndpoint)?\(qString)"
+            let urlString = "\(yelpBusinessSearchEndpoint)\(qString)"
 
             let task: URLSessionDataTask? = downloader.doDownload(urlString: urlString)
             dlog("out task \(task)")

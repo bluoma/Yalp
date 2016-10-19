@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B9190FFF0790667269051BBB /* Pods_Yalp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEBAC9C087529AA1EE34C33F /* Pods_Yalp.framework */; };
+		D2A81A0A1DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */; };
 		F733B77B1DAE8915005535DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B77A1DAE8915005535DF /* AppDelegate.swift */; };
 		F733B7801DAE8915005535DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F733B77E1DAE8915005535DF /* Main.storyboard */; };
 		F733B7821DAE8915005535DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F733B7811DAE8915005535DF /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		29A95233416D97F390E4F18F /* Pods-Yalp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yalp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yalp/Pods-Yalp.debug.xcconfig"; sourceTree = "<group>"; };
 		A1CAB66D7E1A4B7E7F94BC36 /* Pods-Yalp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yalp.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yalp/Pods-Yalp.release.xcconfig"; sourceTree = "<group>"; };
 		AEBAC9C087529AA1EE34C33F /* Pods_Yalp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yalp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationFilterTableViewCell.swift; sourceTree = "<group>"; };
 		F733B7771DAE8915005535DF /* Yalp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yalp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F733B77A1DAE8915005535DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F733B77F1DAE8915005535DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		F733B7951DAE939E005535DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */,
 				F7D76DC11DB01E1B00D215AC /* BusinessTableViewCell.swift */,
 			);
 			name = Views;
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2A81A0A1DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift in Sources */,
 				F733B7901DAE8B1C005535DF /* AppearanceManager.swift in Sources */,
 				F7D76DC21DB01E1B00D215AC /* BusinessTableViewCell.swift in Sources */,
 				F7D0CB231DB127500017EAA3 /* BusinessFilterQueryDTO.swift in Sources */,

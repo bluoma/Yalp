@@ -64,21 +64,19 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     
     func yelpQueryString() -> String {
         
-        let termString = String(format: "term=%@", searchTerm)
+        var paramDict: [String:Any] = [:]
         
-        let latLonString = String(format: "&latitude=%f&longitude=%f", latLon.coordinate.latitude, latLon.coordinate.longitude)
-        
-        let radiusString = String(format: "&radius=%d", searchRadius)
-        
-        let sortString = String(format: "&sort_by=%@", sortBy)
-
-        var dealsString = ""
+        paramDict["term"] = searchTerm
+        paramDict["latitude"] = latLon.coordinate.latitude
+        paramDict["longitude"] = latLon.coordinate.longitude
+        paramDict["radius"] = searchRadius
+        paramDict["location"] = location
+        paramDict["sort_by"] = sortBy
         if (includeDeals) {
-            dealsString = String(format: "&attributes=%@", "deals")
+            paramDict["attributes"] = "deals"
         }
-        var categoriesString = ""
+        
         if categories.count > 0 {
-            
             var catString = ""
             for (i, cat) in categories.enumerated() {
                 catString += cat
@@ -86,17 +84,33 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
                     catString += ","
                 }
             }
+            paramDict["categories"] = catString
+        }
+
+        var resultString = ""
+        var idx = 0
+        for (key, val) in paramDict {
             
-            categoriesString = String(format: "&categories=%@", catString)
+            if (idx == 0) {
+                resultString += "?"
+            }
+            else {
+                resultString += "&"
+            }
+            
+            resultString += "\(key)=\(val)"
+            idx = idx + 1;
         }
         
-        let locationString = String(format:"&location=%@", location)
+        if let qString = resultString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
         
-        let qString = String(format:"%@%@%@%@%@%@", termString, latLonString, radiusString, sortString, dealsString, categoriesString)
-        
-        return qString
+            return qString
+        }
+        else {
+            dlog("bad query string: \(resultString)")
+        }
+        return ""
     }
-    
     
     public var description: String {
         return "searchByTerm: \(searchTerm), categories: \(categories), sortBy: \(sortBy), location: \(location), radius: \(searchRadius), placemark: \(placemark)"
