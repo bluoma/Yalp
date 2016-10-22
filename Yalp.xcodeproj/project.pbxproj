@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B9190FFF0790667269051BBB /* Pods_Yalp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEBAC9C087529AA1EE34C33F /* Pods_Yalp.framework */; };
+		D23BA25A1DB9C93900100E54 /* SortFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23BA2591DB9C93900100E54 /* SortFilterTableViewCell.swift */; };
+		D23BA25C1DB9D10F00100E54 /* SwitchFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23BA25B1DB9D10F00100E54 /* SwitchFilterTableViewCell.swift */; };
 		D2A81A0A1DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */; };
 		F733B77B1DAE8915005535DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733B77A1DAE8915005535DF /* AppDelegate.swift */; };
 		F733B7801DAE8915005535DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F733B77E1DAE8915005535DF /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 		29A95233416D97F390E4F18F /* Pods-Yalp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yalp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yalp/Pods-Yalp.debug.xcconfig"; sourceTree = "<group>"; };
 		A1CAB66D7E1A4B7E7F94BC36 /* Pods-Yalp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yalp.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yalp/Pods-Yalp.release.xcconfig"; sourceTree = "<group>"; };
 		AEBAC9C087529AA1EE34C33F /* Pods_Yalp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yalp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D23BA2591DB9C93900100E54 /* SortFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortFilterTableViewCell.swift; sourceTree = "<group>"; };
+		D23BA25B1DB9D10F00100E54 /* SwitchFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchFilterTableViewCell.swift; sourceTree = "<group>"; };
 		D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationFilterTableViewCell.swift; sourceTree = "<group>"; };
 		F733B7771DAE8915005535DF /* Yalp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yalp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F733B77A1DAE8915005535DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,8 +99,8 @@
 		F733B7791DAE8915005535DF /* Yalp */ = {
 			isa = PBXGroup;
 			children = (
-				F733B7951DAE939E005535DF /* Views */,
 				F733B7941DAE9392005535DF /* Models */,
+				F733B7951DAE939E005535DF /* Views */,
 				F733B7961DAE93A5005535DF /* Controllers */,
 				F733B7971DAE93B1005535DF /* Utils */,
 				F733B7921DAE8DFF005535DF /* README.md */,
@@ -121,8 +125,10 @@
 		F733B7951DAE939E005535DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */,
 				F7D76DC11DB01E1B00D215AC /* BusinessTableViewCell.swift */,
+				D2A81A091DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift */,
+				D23BA2591DB9C93900100E54 /* SortFilterTableViewCell.swift */,
+				D23BA25B1DB9D10F00100E54 /* SwitchFilterTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -181,8 +187,7 @@
 				TargetAttributes = {
 					F733B7761DAE8915005535DF = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = M96UWZCD49;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -270,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D23BA25C1DB9D10F00100E54 /* SwitchFilterTableViewCell.swift in Sources */,
 				D2A81A0A1DB6FDFF0094DE56 /* LocationFilterTableViewCell.swift in Sources */,
 				F733B7901DAE8B1C005535DF /* AppearanceManager.swift in Sources */,
 				F7D76DC21DB01E1B00D215AC /* BusinessTableViewCell.swift in Sources */,
@@ -279,6 +285,7 @@
 				F733B79B1DAE95BC005535DF /* BusinessSummaryDTO.swift in Sources */,
 				F733B7991DAE94A5005535DF /* BusinessListViewController.swift in Sources */,
 				F7F6E9A61DB09D5A00667865 /* FiltersViewController.swift in Sources */,
+				D23BA25A1DB9C93900100E54 /* SortFilterTableViewCell.swift in Sources */,
 				F733B78F1DAE8B1C005535DF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,7 +410,7 @@
 			baseConfigurationReference = 29A95233416D97F390E4F18F /* Pods-Yalp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = M96UWZCD49;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Yalp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluoma.Yalp;
@@ -417,7 +424,7 @@
 			baseConfigurationReference = A1CAB66D7E1A4B7E7F94BC36 /* Pods-Yalp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = M96UWZCD49;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Yalp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluoma.Yalp;

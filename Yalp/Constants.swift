@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 //MARK: - dlog
-public func dlog(_ message: String, _ filePath: String = #file, _ functionName: String = #function, _ lineNum: Int = #line)
+func dlog(_ message: String, _ filePath: String = #file, _ functionName: String = #function, _ lineNum: Int = #line)
 {
     #if DEBUG
         
@@ -28,7 +28,7 @@ public func dlog(_ message: String, _ filePath: String = #file, _ functionName: 
 }
 
 //MARK: - alog
-public func alog(_ message: String, _ filePath: String = #file, _ functionName: String = #function, _ lineNum: Int = #line)
+func alog(_ message: String, _ filePath: String = #file, _ functionName: String = #function, _ lineNum: Int = #line)
 {
     let url  = URL(fileURLWithPath: filePath)
     let path = url.lastPathComponent
@@ -40,27 +40,27 @@ public func alog(_ message: String, _ filePath: String = #file, _ functionName: 
     NSLog(logString)
 }
 
-public var sfLatLon: CLLocation = CLLocation(latitude: 37.785771, longitude: -122.406165) //SF
+var sfLatLon: CLLocation = CLLocation(latitude: 37.785771, longitude: -122.406165) //SF
 
-public let defaultAppearanceKey = "defaultAppearanceKey"
+let defaultAppearanceKey = "defaultAppearanceKey"
 
 
 //MARK: - YelpApi
 
-public let yelpClientId = "nqpS3O6BlMmugVQrcuPuYA"
-public let yelpClientSecret = "c8bfR7nWfDUfLL54sPgrORHy5nML3eEvbQdtB8tbtPCfVXPZEwJS0j8jbt1idL7B"
+let yelpClientId = "nqpS3O6BlMmugVQrcuPuYA"
+let yelpClientSecret = "c8bfR7nWfDUfLL54sPgrORHy5nML3eEvbQdtB8tbtPCfVXPZEwJS0j8jbt1idL7B"
 
-public let yelpOauth2Endpoint = "https://api.yelp.com/oauth2/token"
-public let yelpOauth2PostBody = "grant_type=client_credentials&client_id=\(yelpClientId)&client_secret=\(yelpClientSecret)"
+let yelpOauth2Endpoint = "https://api.yelp.com/oauth2/token"
+let yelpOauth2PostBody = "grant_type=client_credentials&client_id=\(yelpClientId)&client_secret=\(yelpClientSecret)"
 
-public let yelpAuthTokenName = "access_token"
-public var yelpCurrentAuthToken = ""
-public var yelpCurrentAuthTokenExpires = 0  //initially 15552000, which is 180 days.
+let yelpAuthTokenName = "access_token"
+var yelpCurrentAuthToken = ""
+var yelpCurrentAuthTokenExpires = 0  //initially 15552000, which is 180 days.
 
-public let yelpBusinessSearchEndpoint = "https://api.yelp.com/v3/businesses/search"
-public var yelpAuthBearerHeaderKey = "Authorization"
-public var yelpAuthBearerHeaderVal = "Bearer \(yelpCurrentAuthToken)"
-public let yelpAuthTokenRecievedNotification = "yelpAuthTokenRecievedNotification"
+let yelpBusinessSearchEndpoint = "https://api.yelp.com/v3/businesses/search"
+var yelpAuthBearerHeaderKey = "Authorization"
+var yelpAuthBearerHeaderVal = "Bearer \(yelpCurrentAuthToken)"
+let yelpAuthTokenRecievedNotification = "yelpAuthTokenRecievedNotification"
 
 
 public let yelpFoodCategories: [[String:String]] =

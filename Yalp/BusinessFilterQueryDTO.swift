@@ -29,7 +29,7 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //Required if location is not provided. Latitude of the location you want to search near by.
     //`longitude`: decimal
     //Required if location is not provided. Latitude of the location you want to search near by.
-    var latLon: CLLocation = CLLocation(latitude: 37.785771, longitude: -122.406165) //SF
+    var latLon: CLLocation = locationFromLocation(loc: sfLatLon) //SF
     
     //Search radius in meters.
     //If the value is too large, a AREA_TOO_LARGE error may be returned.
@@ -42,7 +42,7 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //For example, "bars,french" will filter by Bars and French.
     //The category identifier should be used (for example "discgolf", not "Disc Golf").
     //`categories`: string. Optional categories to filter the search results with.
-    var categories: [String] = ["mexican", "burmese"]
+    var categories: [String] = ["mexican"]
     
     //Sort the results by one of the these modes: best_match, rating, review_count or distance.
     //`sort_by`: string. Optional. By default it's best_match.
@@ -53,27 +53,51 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //like this "attribute1,attribute2".
     //`attributes`: string. Optional. Currently, the valid values are hot_and_new and deals.
     var includeDeals: Bool = false
+    var includeHotAndNew: Bool = false
     
     //user pressed search button, actually search. reset to false after FiltersViewController dismissed
     var doSearch: Bool = false
     
-    //if user types in location string, use it going forward
+    //if user types in location string, use it going forward if it yeilds valid placemark
     var useCustomLocationString = false
 
+    //prefer to use placemark, since it has city, state if populated
     var placemark: CLPlacemark? = nil
     
-    func yelpQueryString() -> String {
+    
+    func yelpParamDict() -> [String:Any] {
         
         var paramDict: [String:Any] = [:]
         
         paramDict["term"] = searchTerm
-        paramDict["latitude"] = latLon.coordinate.latitude
-        paramDict["longitude"] = latLon.coordinate.longitude
+        
+        if let placemark = self.placemark {
+            
+            if let placemarkLoc = placemark.location {
+                paramDict["latitude"] = placemarkLoc.coordinate.latitude
+                paramDict["longitude"] = placemarkLoc.coordinate.longitude
+            }
+            else if let city = placemark.subAdministrativeArea,
+                let state =  placemark.administrativeArea {
+                paramDict["location"] = city + ", " + state
+            }
+        }
+        else {
+            paramDict["latitude"] = latLon.coordinate.latitude
+            paramDict["longitude"] = latLon.coordinate.longitude
+        }
+        
         paramDict["radius"] = searchRadius
-        paramDict["location"] = location
         paramDict["sort_by"] = sortBy
-        if (includeDeals) {
+        
+        if (includeDeals && includeHotAndNew) {
+            paramDict["attributes"] = "deals,hot_and_new"
+        }
+        else if (includeDeals && !includeHotAndNew) {
             paramDict["attributes"] = "deals"
+        }
+        else if (!includeDeals && includeHotAndNew) {
+            paramDict["attributes"] = "hot_and_new"
         }
         
         if categories.count > 0 {
@@ -87,6 +111,14 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
             paramDict["categories"] = catString
         }
 
+        
+        return paramDict
+    }
+    
+    func yelpQueryString() -> String {
+        
+        let paramDict = yelpParamDict()
+        
         var resultString = ""
         var idx = 0
         for (key, val) in paramDict {
