@@ -19,7 +19,9 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     var dealsOn = false
     var newOn = false
+    var distanceSectionExpanded = false
     var distanceSelectionIdx = 0
+    var sortSectionExpanded = false
     var sortSelectionIdx = 0
     var yelpCategorySelections: [Bool] = Array(repeating: false, count:yelpFoodCategories.count)
 
@@ -68,6 +70,11 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     @IBAction func searchPressed(_ sender: AnyObject) {
         dlog("")
+        updateFilterQuery()
+        dismiss(animated: true, completion:nil)
+    }
+    
+    private func updateFilterQuery() -> Void {
         if dealsOn {
             businessFilter?.includeDeals = true
         }
@@ -86,7 +93,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
             
         case 2:
             businessFilter?.searchRadius = 1609
-        
+            
         case 3:
             businessFilter?.searchRadius = 8047
             
@@ -120,7 +127,6 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         businessFilter?.categories.removeAll()
         for (i, boolVal) in yelpCategorySelections.enumerated() {
-            
             if boolVal {
                 if let catCode = yelpFoodCategories[i]["code"] {
                     businessFilter?.categories.append(catCode)
@@ -131,7 +137,6 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         dlog("qString: \(businessFilter?.yelpQueryString())")
         
         businessFilter?.doSearch = true
-        dismiss(animated: true, completion:nil)
     }
     
     @IBAction func locationTextChanged(_ sender: AnyObject) {
@@ -189,11 +194,17 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         dlog("indexPath: \(indexPath)")
         
         if indexPath.section == 2 {
-            distanceSelectionIdx = indexPath.row
+            if distanceSectionExpanded {
+                distanceSelectionIdx = indexPath.row
+            }
+            distanceSectionExpanded = !distanceSectionExpanded
             tableView.reloadSections(IndexSet(integer:2), with: UITableViewRowAnimation.fade)
         }
         else if indexPath.section == 3 {
-            sortSelectionIdx = indexPath.row
+            if sortSectionExpanded {
+                sortSelectionIdx = indexPath.row
+            }
+            sortSectionExpanded = !sortSectionExpanded
             tableView.reloadSections(IndexSet(integer:3), with: UITableViewRowAnimation.fade)
         }
         
@@ -216,10 +227,20 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
             return 2 //Deals, Hot and New
 
         case 2:
-            return 5 //Any, 0.3 miles, 1 mile, 5 miles, 20 miles
+            if distanceSectionExpanded {
+                return 5 //Any, 0.3 miles, 1 mile, 5 miles, 20 miles
+            }
+            else {
+                return 1
+            }
             
         case 3:
-            return 4 //best_match, rating, review_count or distance
+            if sortSectionExpanded {
+                return 4 //best_match, rating, review_count or distance
+            }
+            else {
+                return 1
+            }
         
         case 4:
             return yelpFoodCategories.count //list of categories
@@ -356,108 +377,129 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     func handleDistanceFilterSection(tableView: UITableView, indexPath: IndexPath) -> SortFilterTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SortFilterCell")as! SortFilterTableViewCell
         
-        switch indexPath.row {
+        if !distanceSectionExpanded {
             
-        case 0:
-            cell.sortLabel?.text = "Any"
-            if distanceSelectionIdx == 0 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-        case 1:
-            cell.sortLabel?.text = "0.3 miles"
-            if distanceSelectionIdx == 1 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
+            dlog("distance is contracted for indexPath: \(indexPath), selectedIdx: \(distanceSelectionIdx)")
+            
+            //there's only one row and it's selected and collapsed, use grey dropdown
+            cell.sortIconImageView.image = UIImage(named: "arrow_drop_down_grey")
+            
+            switch distanceSelectionIdx {
+                
+            case 0:
+                cell.sortLabel?.text = "Any"
+               
+            case 1:
+                cell.sortLabel?.text = "0.3 miles"
+                
+            case 2:
+                cell.sortLabel?.text = "1 mile"
+
+            case 3:
+                cell.sortLabel?.text = "5 miles"
+                
+            case 4:
+                cell.sortLabel?.text = "25 miles"
+            
+            default:
+                dlog("unexpected row: \(indexPath)")
+                cell.sortLabel?.text = "Any"
             }
 
-        case 2:
-            cell.sortLabel?.text = "1 mile"
-            if distanceSelectionIdx == 2 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-        case 3:
-            cell.sortLabel?.text = "5 miles"
-            if distanceSelectionIdx == 3 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-    
-        case 4:
-            cell.sortLabel?.text = "25 miles"
-            if distanceSelectionIdx == 4 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-
-        default:
-            dlog("unexpected row: \(indexPath)")
-            cell.sortLabel?.text = "Any"
         }
-        
+        else {
+            
+            dlog("distance is contracted for indexPath: \(indexPath), selectedIdx: \(distanceSelectionIdx)")
+
+            if distanceSelectionIdx == indexPath.row {
+                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
+            }
+            else {
+                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
+            }
+
+            switch indexPath.row {
+                
+            case 0:
+                cell.sortLabel?.text = "Any"
+                
+            case 1:
+                cell.sortLabel?.text = "0.3 miles"
+                
+            case 2:
+                cell.sortLabel?.text = "1 mile"
+            
+            case 3:
+                cell.sortLabel?.text = "5 miles"
+                
+            case 4:
+                cell.sortLabel?.text = "25 miles"
+            
+            default:
+                dlog("unexpected row: \(indexPath)")
+                cell.sortLabel?.text = "Any"
+            }
+        }
         return cell
     }
     
     func handleSortFilterSection(tableView: UITableView, indexPath: IndexPath) -> SortFilterTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SortFilterCell")as! SortFilterTableViewCell
         
-        switch indexPath.row {
+        if !sortSectionExpanded {
+            dlog("sort is contracted for indexPath: \(indexPath), selectedIdx: \(distanceSelectionIdx)")
             
-        case 0:
-            cell.sortLabel?.text = "Best Match"
-            if sortSelectionIdx == 0 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
+            //there's only one row and it's selected and collapsed, use grey dropdown
+            cell.sortIconImageView.image = UIImage(named: "arrow_drop_down_grey")
             
-        case 1:
-            cell.sortLabel?.text = "Ratings"
-            if sortSelectionIdx == 1 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
+            switch sortSelectionIdx {
+                
+            case 0:
+                cell.sortLabel?.text = "Best Match"
+                
+            case 1:
+                cell.sortLabel?.text = "Ratings"
+                
+            case 2:
+                cell.sortLabel?.text = "Reviews"
+                
+            case 3:
+                cell.sortLabel?.text = "Distance"
+                
+            default:
+                dlog("unexpected row: \(indexPath)")
+                cell.sortLabel?.text = "Best Match"
             }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-            
-            
-        case 2:
-            cell.sortLabel?.text = "Reviews"
-            if sortSelectionIdx == 2 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-            
-            
-        case 3:
-            cell.sortLabel?.text = "Distance"
-            if sortSelectionIdx == 3 {
-                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
-            }
-            else {
-                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
-            }
-            
-        default:
-            dlog("unexpected row: \(indexPath)")
-            cell.sortLabel?.text = "Best Match"
-            
         }
-        
+        else {
+            
+            if sortSelectionIdx == indexPath.row {
+                cell.sortIconImageView.image = UIImage(named: "blue-circle-check")
+            }
+            else {
+                cell.sortIconImageView.image = UIImage(named: "grey-circle-uncheck")
+            }
+            
+            switch indexPath.row {
+                
+            case 0:
+                cell.sortLabel?.text = "Best Match"
+                
+            case 1:
+                cell.sortLabel?.text = "Ratings"
+                
+            case 2:
+                cell.sortLabel?.text = "Reviews"
+                
+            case 3:
+                cell.sortLabel?.text = "Distance"
+                
+            default:
+                dlog("unexpected row: \(indexPath)")
+                cell.sortLabel?.text = "Best Match"
+                
+            }
+        }
         return cell
     }
     
