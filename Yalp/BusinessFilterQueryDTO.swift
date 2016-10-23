@@ -23,7 +23,7 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //Specifies the combination of "address, neighborhood, city, state or zip, optional country"
     //to be used when searching for businesses.
     //`location`: string. Required if either latitude or longitude is not provided.
-    var location: String = "San Francisco"
+    var location: String = ""
     
     //`latitude`: decimal
     //Required if location is not provided. Latitude of the location you want to search near by.
@@ -42,11 +42,11 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
     //For example, "bars,french" will filter by Bars and French.
     //The category identifier should be used (for example "discgolf", not "Disc Golf").
     //`categories`: string. Optional categories to filter the search results with.
-    var categories: [String] = ["mexican"]
+    var categories: [String] = []
     
     //Sort the results by one of the these modes: best_match, rating, review_count or distance.
     //`sort_by`: string. Optional. By default it's best_match.
-    var sortBy: String = "review_count"
+    var sortBy: String = "best_match"
     
     //Additional filters to search businesses.
     //You can use multiple attribute filters at the same time by providing a comma separated string,
@@ -77,7 +77,7 @@ class BusinessFilterQueryDTO: CustomStringConvertible, CustomDebugStringConverti
                 paramDict["latitude"] = placemarkLoc.coordinate.latitude
                 paramDict["longitude"] = placemarkLoc.coordinate.longitude
             }
-            else if let city = placemark.subAdministrativeArea,
+            else if let city = placemark.locality,
                 let state =  placemark.administrativeArea {
                 paramDict["location"] = city + ", " + state
             }

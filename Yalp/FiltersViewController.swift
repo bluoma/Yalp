@@ -15,8 +15,9 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBOutlet weak var filterTableView: UITableView!
     var businessFilter: BusinessFilterQueryDTO?
     var geoCoder = CLGeocoder()
-    var currentPlacemark: CLPlacemark?
+    //var currentPlacemark: CLPlacemark?
     
+    var useCurrentLocationOn = true
     var dealsOn = false
     var newOn = false
     var distanceSectionExpanded = false
@@ -29,6 +30,11 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let businessFilter = businessFilter {
+            useCurrentLocationOn = businessFilter.useCustomLocationString
+        }
+       
+        
         dlog("businessFilter: \(businessFilter)")
         // Do any additional setup after loading the view.
     }
@@ -36,13 +42,6 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if let filter = businessFilter {
-            filter.sortBy = "distance"
-            filter.includeDeals = true
-            filter.categories = ["chinese", "burmese"]
-            
-            
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -158,6 +157,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     //MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) { // location text        
         dlog("")
+        textField.textColor = UIColor.black
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -169,7 +169,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         if let locationText = textField.text,
             locationText.characters.count > 0 {
             dlog("forward geocoding loctext: \(locationText)")
-            forwardGeocode(locationText: locationText)
+            forwardGeocode(textField: textField, locationText: locationText)
         }
         else {
             dlog("loctext empty")
@@ -184,6 +184,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         self.businessFilter?.useCustomLocationString = false
+        textField.textColor = UIColor.black
         return true
     }
     
@@ -221,8 +222,12 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         switch section {
             
         case 0:
-            return 1 //Location text entry
-            
+            if useCurrentLocationOn {
+                return 1
+            }
+            else {
+                return 2 //Location current switch / free form text entry
+            }
         case 1:
             return 2 //Deals, Hot and New
 
@@ -268,7 +273,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         case 0:
             header = UITableViewHeaderFooterView()
-            header!.textLabel?.text = "Current Location"
+            header!.textLabel?.text = "Location"
             
         case 1:
             header = UITableViewHeaderFooterView()
@@ -290,7 +295,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
             header = nil
 
         }
-        dlog("returning header: \(header) for section: \(section))")
+        //dlog("returning header: \(header) for section: \(section))")
         return header;
     }
 
@@ -321,21 +326,65 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
 
 
-    func handleLocationEntrySection(tableView: UITableView, indexPath: IndexPath) -> LocationFilterTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationFilterCell") as! LocationFilterTableViewCell
-        
-        if let city = businessFilter?.placemark?.subAdministrativeArea {
-            cell.locationTextField.placeholder = city
+    func handleLocationEntrySection(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+    
+        if indexPath.row == 0 {
+            return handleLocationSwitch(tableView: tableView, indexPath: indexPath)
         }
         else {
-            cell.locationTextField.placeholder = businessFilter?.location
+            return handleLocationText(tableView: tableView, indexPath: indexPath)
+        }
+        
+    }
+    
+    func handleLocationText(tableView: UITableView, indexPath: IndexPath) -> LocationFilterTableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationFilterCell") as! LocationFilterTableViewCell
+        cell.locationTextField.textColor = UIColor.black
+        
+        if let place = businessFilter?.placemark {
+            if let city = place.locality,
+                let state = place.administrativeArea {
+                let switchLabelText = "\(city), \(state)"
+                cell.locationTextField.placeholder = switchLabelText
+            }
         }
         return cell
     }
     
+    func handleLocationSwitch(tableView: UITableView, indexPath: IndexPath) -> SwitchFilterTableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchFilterCell") as! SwitchFilterTableViewCell
+        cell.changedDelegate = self
+        cell.sortSwitchLabel.isEnabled = true
+        var switchLabelText = "Search from "
+        if let place = businessFilter?.placemark {
+            if let city = place.locality,
+                let state = place.administrativeArea {
+                switchLabelText += "\(city), \(state)"
+            }
+        }
+        else {
+            switchLabelText += "Current Location"
+        }
+        cell.sortSwitchLabel.text = switchLabelText
+        if useCurrentLocationOn {
+            cell.sortSwitchLabel.isEnabled = true
+        }
+        else {
+            cell.sortSwitchLabel.isEnabled = false
+        }
+        cell.sortSwitch.isOn = useCurrentLocationOn
+       
+        return cell
+    }
+
+
+    
     func handleSwitchSection(tableView: UITableView, indexPath: IndexPath) -> SwitchFilterTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchFilterCell") as! SwitchFilterTableViewCell
         cell.changedDelegate = self
+        cell.sortSwitchLabel.isEnabled = true
         
         if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -375,6 +424,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
 
     func handleDistanceFilterSection(tableView: UITableView, indexPath: IndexPath) -> SortFilterTableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "SortFilterCell")as! SortFilterTableViewCell
         
         if !distanceSectionExpanded {
@@ -405,7 +455,6 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
                 dlog("unexpected row: \(indexPath)")
                 cell.sortLabel?.text = "Any"
             }
-
         }
         else {
             
@@ -507,7 +556,12 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         if let indexPath = filterTableView.indexPath(for: switchCell) {
         
-            if indexPath.section == 1 {
+            if indexPath.section == 0 {
+                useCurrentLocationOn = value
+                dlog("loc useCurrent: \(value)")
+                filterTableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.fade)
+            }
+            else if indexPath.section == 1 {
                 if indexPath.row == 0 {
                     dealsOn = value
                 }
@@ -523,7 +577,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     //MARK: - CoreLocation
     
-    func forwardGeocode(locationText: String) -> Void {
+    func forwardGeocode(textField: UITextField, locationText: String) -> Void {
         
         geoCoder.geocodeAddressString(locationText, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
             
@@ -543,10 +597,20 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
                 self.businessFilter?.placemark = place
                 self.businessFilter?.useCustomLocationString = true
                 
+                textField.textColor = UIColor.black
+                if let city = place.locality,
+                    let state = place.administrativeArea {
+                    let cityStateText = "\(city), \(state)"
+                    textField.placeholder = cityStateText
+                    textField.text = cityStateText
+                }
+
+        
             }
             else if error != nil {
                 dlog("geocode error for: \(locationText), err: \(error)")
                 self.businessFilter?.useCustomLocationString = false
+                textField.textColor = UIColor.red
             }
         })
 

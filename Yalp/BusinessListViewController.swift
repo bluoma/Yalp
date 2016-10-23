@@ -27,9 +27,9 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     var locationManager = CLLocationManager()
-    @NSCopying var currentLocation: CLLocation?
+    var currentLocation: CLLocation? = locationFromLocation(loc: sfLatLon)
     var geoCoder = CLGeocoder()
-    var currentPlacemark: CLPlacemark?
+    var currentPlacemark: CLPlacemark? = nil
     
     //MARK: - ViewLifeCycle
     override func viewDidLoad() {
@@ -50,27 +50,29 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        dlog("self.businessFilter: \(self.businessFilter)")
         
-        let locAuthStatus = CLLocationManager.authorizationStatus()
+        //let locAuthStatus = CLLocationManager.authorizationStatus()
         
-        if locAuthStatus == .authorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-        }
-        dlog("filterQuery: \(businessFilter.doSearch)")
+        //if locAuthStatus == .authorizedWhenInUse {
+        //    locationManager.startUpdatingLocation()
+        //}
+        //dlog("filterQuery: \(businessFilter.doSearch)")
         
         if businessFilter.doSearch {
-            
+            doSearchDownload()
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        dlog("self.businessFilter: \(self.businessFilter)")
         
-        let locAuthStatus = CLLocationManager.authorizationStatus()
+        //let locAuthStatus = CLLocationManager.authorizationStatus()
         
-        if locAuthStatus == .authorizedWhenInUse {
-            locationManager.stopUpdatingLocation()
-        }
+        //if locAuthStatus == .authorizedWhenInUse {
+        //    locationManager.stopUpdatingLocation()
+        //}
     }
 
 
@@ -97,19 +99,22 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             }
             else {
                 //use SF
-                self.businessFilter.latLon = sfLatLon
+                self.businessFilter.latLon = locationFromLocation(loc: sfLatLon)
             }
             
             if let currentPlacemark = self.currentPlacemark {
-                self.businessFilter.placemark = CLPlacemark(placemark: currentPlacemark)
+                
+                dlog("businessFilter.useCustomLocationString: \(businessFilter.useCustomLocationString)")
+                
+                if !self.businessFilter.useCustomLocationString {
+                    self.businessFilter.placemark = CLPlacemark(placemark: currentPlacemark)
+                }
             }
             else {
-                //TODO generate default placemark
+                //TODO generate default placemark, difficult since all fields are read-only
             }
             filtersVc.businessFilter = self.businessFilter
         }
-        
-        
     }
     
     @IBAction func filtersClicked(_ sender: AnyObject) {
@@ -119,17 +124,31 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         performSegue(withIdentifier: "FiltersModalSegue", sender:self)
     }
 
+    func hereClicked(_ sender: AnyObject) {
+        
+        dlog("")
+        
+        self.businessFilter.useCustomLocationString = false
+        doSearchDownload()
+    }
+
 
     //MARK: - JsonDownloader
     func authTokenReceived(notification: NSNotification) {
         dlog("got auth token, let's download: \(notification)")
         authTokenReceived = true
         
+        
         locationManager.distanceFilter = 100 //meters
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        
-        //doSearchDownload()
+        let locAuthStatus = CLLocationManager.authorizationStatus()
+
+        if locAuthStatus == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }        
+        else {
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     func doSearchDownload() {
@@ -279,7 +298,7 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
     {
         dlog("status: \(status.rawValue)")
-        if status == .authorizedAlways || status == .authorizedWhenInUse {
+        if status == .authorizedWhenInUse {
             manager.startUpdatingLocation()
         }
     }
@@ -291,12 +310,10 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         dlog("locations: \(locations)")
         
-        if let currentLoc = locations.last {
-            if currentLocation != currentLoc {
-                currentLocation = currentLoc
-                
-                businessFilter.latLon = locationFromLocation(loc: currentLoc)
-                
+        if let newCurrentLoc = locations.last,
+            let lastLocation = currentLocation {
+            if !lastLocation.isEqual(newCurrentLoc) {
+                currentLocation = newCurrentLoc
                 geoCoder.reverseGeocodeLocation(currentLocation!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
                     if let error = error {
                         dlog("reverse geocode err: \(error)")
@@ -305,12 +322,16 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                         for place in placemarks {
                             dlog("placeMark: \(place)")
                         }
-                        if let currentMark = placemarks.last {
-                            if currentMark != self.currentPlacemark {
+                        if let currentMark = placemarks.last,
+                            let lastMark = self.currentPlacemark {
+                            if !lastMark.isEqual(currentMark) {
                                 self.currentPlacemark = currentMark
-                                self.businessFilter.placemark = CLPlacemark(placemark: currentMark)
                             }
                         }
+                        else if self.currentPlacemark == nil {
+                            self.currentPlacemark = placemarks.last
+                        }
+                        
                     }
                     else {
                         dlog("both error and placemarks are nil ?")
@@ -319,12 +340,12 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
                 if businessArray.count > 0 {
                     updateLocations()
                 }
-                else {
-                    doSearchDownload()
-                }
+                //else {
+                //    doSearchDownload()
+                //}
             }
         }
-        dlog("hopefully this is the main thread: \(Thread.current)")
+        //dlog("hopefully this is the main thread: \(Thread.current)")
     }
 
     
@@ -332,10 +353,16 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         
         for business in businessArray {
             
-            let loc = CLLocation(latitude: business.latitude, longitude: business.longitude)
-            if (currentLocation != nil) {
-                let distance = loc.distance(from: currentLocation!)
-                dlog("distance: \(distance) m for address: \(business.fullAddress)")
+            let businessLocation = CLLocation(latitude: business.latitude, longitude: business.longitude)
+            
+            if let placemarkLocation = businessFilter.placemark?.location {
+                let distance = businessLocation.distance(from: placemarkLocation)
+                dlog("placemark distance: \(distance) m for address: \(business.fullAddress), placeLatLon: \(placemarkLocation)")
+                business.distance = Int(distance)
+            }
+            else if let currentLocation = self.currentLocation {
+                let distance = businessLocation.distance(from: currentLocation)
+                dlog("current loc distance: \(distance) m for address: \(business.fullAddress)")
                 business.distance = Int(distance)
             }
             else {
