@@ -37,8 +37,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Interested in discussing 'smart' Model objects with fetch methods e.g. containing references to Yelp http client. What 'pattern' is this?
+2. 
 
 ## Video Walkthrough
 
