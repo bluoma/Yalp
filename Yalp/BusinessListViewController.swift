@@ -265,7 +265,48 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
             cell.distanceLabel.text = "?? mi"
         }
         cell.dollarLabel.text = businessSummary.price
-        cell.ratingLabel.text = String(businessSummary.rating)
+        //cell.ratingLabel.text = String(businessSummary.rating)
+        
+        dlog("rating: \(businessSummary.rating)")
+        
+        switch (businessSummary.rating) {
+            
+        case 5.0:
+            cell.ratingImageView.image = mergeImagesRatingFive()
+            dlog("match 5")
+        case 4.5:
+            cell.ratingImageView.image = mergeImagesRatingFourHalf()
+            dlog("match 4.5")
+
+        case 4.0:
+            cell.ratingImageView.image = mergeImagesRatingFour()
+            dlog("match 4")
+            
+        case 3.5:
+            cell.ratingImageView.image = mergeImagesRatingThreeHalf()
+            dlog("match 3.5")
+
+        case 3.0:
+            cell.ratingImageView.image = mergeImagesRatingThree()
+            dlog("match 3")
+
+        case 2.5:
+            cell.ratingImageView.image = mergeImagesRatingTwoHalf()
+
+        case 2.0:
+            cell.ratingImageView.image = mergeImagesRatingTwo()
+            
+        case 1.5:
+            cell.ratingImageView.image = mergeImagesRatingOneHalf()
+
+        case 1.0:
+            cell.ratingImageView.image = mergeImagesRatingOne()
+            
+        default:
+            cell.ratingImageView.image = mergeImagesRatingZero()
+
+        }
+        
         if let imageUrl = URL(string: businessSummary.imageUrlString) {
             cell.businessImageView.setImageWith(imageUrl)
         

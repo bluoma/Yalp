@@ -6,7 +6,7 @@
 //  Copyright © 2016 Bill. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreLocation
 
 //MARK: - dlog
@@ -41,6 +41,370 @@ func alog(_ message: String, _ filePath: String = #file, _ functionName: String 
 }
 
 var sfLatLon: CLLocation = CLLocation(latitude: 37.785771, longitude: -122.406165) //SF
+
+func getDocumentsDirectory() -> URL {
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let documentsDirectory = paths[0]
+    return documentsDirectory
+}
+
+func mergeImagesRatingFive() -> UIImage? {
+    
+    let fiveImage = UIImage(named: "14x14_5")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    fiveImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    fiveImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + 2 * o, y: 0)
+    fiveImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + 3 * o, y: 0)
+    fiveImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + 4 * o, y: 0)
+    fiveImage!.draw(at: point)
+        
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("five.png")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+func mergeImagesRatingFourHalf() -> UIImage? {
+    
+    
+    let fourImage = UIImage(named: "14x14_4")
+    let halfImage = UIImage(named: "14x14_4-5")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    halfImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("four-five.png")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+
+func mergeImagesRatingFour() -> UIImage? {
+    
+    
+    let fourImage = UIImage(named: "14x14_4")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    fourImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("four.png")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+
+func mergeImagesRatingThreeHalf() -> UIImage? {
+    
+    
+    let threeImage = UIImage(named: "14x14_3")
+    let halfImage = UIImage(named: "14x14_3-5")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    threeImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    threeImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    threeImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    halfImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("three-five.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+func mergeImagesRatingThree() -> UIImage? {
+    
+    
+    let threeImage = UIImage(named: "14x14_3")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    threeImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    threeImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    threeImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("three.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+func mergeImagesRatingTwoHalf() -> UIImage? {
+    
+    let twoImage = UIImage(named: "14x14_2")
+    let halfImage = UIImage(named: "14x14_2-5")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    twoImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    twoImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    halfImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("two-five.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+
+func mergeImagesRatingTwo() -> UIImage? {
+    
+    let twoImage = UIImage(named: "14x14_2")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    twoImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    twoImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("two.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+func mergeImagesRatingOneHalf() -> UIImage? {
+    
+    let oneImage = UIImage(named: "14x14_1")
+    let halfImage = UIImage(named: "14x14_1-5")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    oneImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    halfImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("one-five.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+
+func mergeImagesRatingOne() -> UIImage? {
+    
+    let oneImage = UIImage(named: "14x14_1")
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    oneImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("one.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+func mergeImagesRatingZero() -> UIImage? {
+    
+    let zeroImage = UIImage(named: "14x14_0")
+    let w = 14
+    let h = 14
+    let o = 2
+    let size = CGSize(width: (w * 5) + (o * 4), height: h)
+    UIGraphicsBeginImageContext(size)
+    
+    var point = CGPoint(x: w * 0, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 1 + o, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 2 + o * 2, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 3 + o * 3, y: 0)
+    zeroImage!.draw(at: point)
+    point = CGPoint(x: w * 4 + o * 4, y: 0)
+    zeroImage!.draw(at: point)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+    
+    if let img = newImage {
+        if let data = UIImagePNGRepresentation(img) {
+            let filename = getDocumentsDirectory().appendingPathComponent("zero.png")
+            dlog("filename: \(filename)")
+            try? data.write(to: filename)
+        }
+    }
+    return newImage
+}
+
+
 
 let defaultAppearanceKey = "defaultAppearanceKey"
 

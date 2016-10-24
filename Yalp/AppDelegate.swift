@@ -24,8 +24,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
         downloader.delegate = self
         downloader.doAuthToken()
         
+        let img5 = mergeImagesRatingFive()
+        dlog("5: \(img5)")
+        
+        let img45 = mergeImagesRatingFourHalf()
+        dlog("4.5: \(img45)")
+
+        let img4 = mergeImagesRatingFour()
+        dlog("4: \(img4)")
+
+        let img35 = mergeImagesRatingThreeHalf()
+        dlog("4.5: \(img35)")
+        
+        let img3 = mergeImagesRatingThree()
+        dlog("3: \(img3)")
+        
+        let img25 = mergeImagesRatingTwoHalf()
+        dlog("2.5: \(img25)")
+        
+        let img2 = mergeImagesRatingTwo()
+        dlog("2: \(img2)")
+        
+        let img15 = mergeImagesRatingOneHalf()
+        dlog("1.5: \(img15)")
+        
+        let img1 = mergeImagesRatingOne()
+        dlog("1: \(img1)")
+        
+        let img0 = mergeImagesRatingZero()
+        dlog("0: \(img0)")
+
+        
         dlog("out")
 
+        
         
         return true
     }
