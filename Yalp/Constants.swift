@@ -72,12 +72,14 @@ func mergeImagesRatingFive() -> UIImage? {
     
     UIGraphicsEndImageContext()
     
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("five.png")
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 
@@ -106,13 +108,14 @@ func mergeImagesRatingFourHalf() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("four-five.png")
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 
@@ -143,12 +146,14 @@ func mergeImagesRatingFour() -> UIImage? {
     
     UIGraphicsEndImageContext()
     
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("four.png")
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 
@@ -179,7 +184,7 @@ func mergeImagesRatingThreeHalf() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("three-five.png")
@@ -187,6 +192,7 @@ func mergeImagesRatingThreeHalf() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 
@@ -215,7 +221,7 @@ func mergeImagesRatingThree() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("three.png")
@@ -223,6 +229,7 @@ func mergeImagesRatingThree() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 
@@ -251,7 +258,7 @@ func mergeImagesRatingTwoHalf() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("two-five.png")
@@ -259,6 +266,7 @@ func mergeImagesRatingTwoHalf() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 
@@ -287,7 +295,7 @@ func mergeImagesRatingTwo() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("two.png")
@@ -295,6 +303,8 @@ func mergeImagesRatingTwo() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
+    
     return newImage
 }
 
@@ -323,7 +333,7 @@ func mergeImagesRatingOneHalf() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("one-five.png")
@@ -331,6 +341,8 @@ func mergeImagesRatingOneHalf() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
+    
     return newImage
 }
 
@@ -359,7 +371,7 @@ func mergeImagesRatingOne() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("one.png")
@@ -367,6 +379,8 @@ func mergeImagesRatingOne() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
+    
     return newImage
 }
 
@@ -393,7 +407,7 @@ func mergeImagesRatingZero() -> UIImage? {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
-    
+    /*
     if let img = newImage {
         if let data = UIImagePNGRepresentation(img) {
             let filename = getDocumentsDirectory().appendingPathComponent("zero.png")
@@ -401,6 +415,7 @@ func mergeImagesRatingZero() -> UIImage? {
             try? data.write(to: filename)
         }
     }
+    */
     return newImage
 }
 

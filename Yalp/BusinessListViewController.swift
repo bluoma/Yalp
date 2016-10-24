@@ -10,10 +10,11 @@ import UIKit
 import CoreLocation
 import AFNetworking
 
-class BusinessListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, JsonDownloaderDelegate {
+class BusinessListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, JsonDownloaderDelegate {
     
     @IBOutlet weak var businessTableView: UITableView!
-
+    
+    var searchBar: UISearchBar!
     var businessDownloadTask: URLSessionDataTask?
     var authTokenReceived = false
     var businessFilter = BusinessFilterQueryDTO()
@@ -38,12 +39,13 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         // Do any additional setup after loading the view.
         dlog("in")
         
-        businessTableView.estimatedRowHeight = 100
+        businessTableView.estimatedRowHeight = 120
         businessTableView.rowHeight = UITableViewAutomaticDimension
-
         
-        let searchBar = UISearchBar()
+        searchBar = UISearchBar()
         searchBar.sizeToFit()
+        searchBar.showsCancelButton = false
+        searchBar.delegate = self
         self.navigationItem.titleView = searchBar
         
         let notificationCenter = NotificationCenter.default
@@ -422,5 +424,49 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    //([CLPlacemark]?, Error?) -> Swift.Void
+    //MARK: - UISearchBarDelegate
+    /*
+     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+     dlog("")
+     searchActive = true
+     }
+     */
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        dlog("searchText: \(searchText)")
+        
+        if searchText.characters.count == 0 {
+           //searchActive = false
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dlog("searchBarText: \(searchBar.text)")
+        searchBar.endEditing(true)
+        /*
+        filteredMoviesArray = moviesArray.filter({ (movie) -> Bool in
+            if let searchText = searchBar.text {
+                let pattern = "\\b" + searchText + "\\b"
+                let range = movie.overview.range(of: pattern, options: [.caseInsensitive, .regularExpression])
+                return range != nil
+            }
+            return false
+        })
+        //if (filteredMoviesArray.count == 0){
+        //    searchActive = false;
+        //}
+        //else {
+        searchActive = true;
+        //}
+        moviesTableView.reloadData()
+        */
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        dlog("")
+        searchBar.endEditing(true)
+        //searchActive = false
+        //moviesTableView.reloadData()
+    }
+
 }
