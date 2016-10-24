@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JsonDownloaderDelegate {
         // Override point for customization after application launch.
         dlog("in")
         
+        AppearanceManager.applyDefaultOpaqueRedTheme(window: window)
+        
         downloader.delegate = self
         downloader.doAuthToken()
         

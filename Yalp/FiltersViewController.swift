@@ -24,6 +24,7 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var distanceSelectionIdx = 0
     var sortSectionExpanded = false
     var sortSelectionIdx = 0
+    var categorySectionExpanded = false
     var yelpCategorySelections: [Bool] = Array(repeating: false, count:yelpFoodCategories.count)
 
     //MARK: - View Lifecycle
@@ -248,8 +249,12 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
             }
         
         case 4:
-            return yelpFoodCategories.count //list of categories
-            
+            if categorySectionExpanded {
+                return yelpFoodCategories.count //list of categories
+            }
+            else {
+                return 3
+            }
         default:
             dlog("unexpected section: \(section)")
             return 0
@@ -262,8 +267,16 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44.0
+        return 28.0
     }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if (section == 4) {
+            return 28.0
+        }
+        return 0.0
+    }
+
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
@@ -299,6 +312,44 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return header;
     }
 
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        let header = view as! UITableViewHeaderFooterView
+        //header.textLabel?.frame.origin.x = 4
+        //header.textLabel?.frame.size.width -= 8
+        header.contentView.backgroundColor = UIColor(red: 204/255, green: 47/255, blue: 40/255, alpha: 0.80) //make the background color red
+        header.textLabel?.textColor = UIColor.white //make the text white
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        var footer: UITableViewHeaderFooterView? = nil
+        
+        if section == 4 {
+            footer = UITableViewHeaderFooterView()
+            let grec = UITapGestureRecognizer(target: self, action: #selector(FiltersViewController.footerViewPressed))
+            grec.numberOfTapsRequired = 1
+            grec.numberOfTouchesRequired = 1
+            footer?.addGestureRecognizer(grec)
+            if categorySectionExpanded {
+                footer?.textLabel?.text = "See Less"
+            }
+            else {
+                footer?.textLabel?.text = "See All"
+            }
+        }
+        return footer
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if section == 4 {
+            let footer = view as! UITableViewHeaderFooterView
+            footer.textLabel?.textAlignment = .center
+            footer.textLabel?.textColor = UIColor.cyan
+            footer.contentView.backgroundColor = UIColor(white: 0.5, alpha: 1.0)
+        }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -573,6 +624,14 @@ class FiltersViewController: UIViewController, UITextFieldDelegate, UITableViewD
                 yelpCategorySelections[indexPath.row] = value
             }
         }
+    }
+    
+    func footerViewPressed() -> Void {
+        
+        dlog("categoriesExpanded: \(categorySectionExpanded)")
+        categorySectionExpanded = !categorySectionExpanded
+        filterTableView.reloadSections(IndexSet(integer: 4), with: UITableViewRowAnimation.fade)
+
     }
     
     //MARK: - CoreLocation

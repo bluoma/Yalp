@@ -38,6 +38,14 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
         // Do any additional setup after loading the view.
         dlog("in")
         
+        businessTableView.estimatedRowHeight = 100
+        businessTableView.rowHeight = UITableViewAutomaticDimension
+
+        
+        let searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        self.navigationItem.titleView = searchBar
+        
         let notificationCenter = NotificationCenter.default
         let notifName = NSNotification.Name(yelpAuthTokenRecievedNotification)
         notificationCenter.addObserver(self, selector: #selector(BusinessListViewController.authTokenReceived(notification:)), name: notifName, object: nil)
