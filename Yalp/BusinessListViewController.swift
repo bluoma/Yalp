@@ -219,24 +219,16 @@ class BusinessListViewController: UIViewController, UITableViewDelegate, UITable
 
     
     //MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
-    {
-        let header = UITableViewHeaderFooterView()
-        
-        header.textLabel?.text = "Location: \(currentPlacemark?.subAdministrativeArea)"
-        
-        return header;
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 88.0
+        return 110.0
     }
     
     
